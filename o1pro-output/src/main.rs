@@ -1,7 +1,8 @@
 use bevy::prelude::*;
+mod chunk;
+mod player;
 mod voxel;
 mod world;
-mod chunk;
 
 use voxel::VoxelPlugin;
 use world::WorldPlugin;
@@ -11,6 +12,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugins(VoxelPlugin)
         .add_plugins(WorldPlugin)
+        .add_plugins(player::PlayerPlugin)
         .add_systems(Startup, setup)
         .run();
 }

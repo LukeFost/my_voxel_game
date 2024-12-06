@@ -26,10 +26,17 @@ fn generate_test_chunks(mut world: ResMut<VoxelWorld>) {
     }
 }
 
-fn update_chunks(world: Res<VoxelWorld>) {
-    // Placeholder system that will later handle chunk updates
-    for _chunk in world.chunks.iter() {
-        // No-op for now
+fn debug_chunks(world: Res<VoxelWorld>) {
+    println!("Number of chunks: {}", world.chunks.len());
+}
+
+fn remesh_chunks(mut world: ResMut<VoxelWorld>) {
+    // For now, just print something when chunks need remeshing
+    for chunk in &mut world.chunks {
+        if chunk.needs_remesh {
+            println!("Remeshing chunk at {:?}", chunk.position);
+            chunk.needs_remesh = false; // reset after "remesh"
+        }
     }
 }
 
@@ -37,6 +44,6 @@ impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<VoxelWorld>()
            .add_systems(Startup, generate_test_chunks)
-           .add_systems(Update, update_chunks);
+           .add_systems(Update, (debug_chunks, remesh_chunks));
     }
 }

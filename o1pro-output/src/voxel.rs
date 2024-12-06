@@ -23,15 +23,13 @@ impl Default for VoxelMaterial {
 #[derive(Debug)]
 pub struct VoxelPlugin;
 
-fn update_voxels(time: Res<Time>, mut query: Query<&mut Transform, With<Voxel>>) {
-    // Placeholder system that will later handle voxel updates
-    for _transform in query.iter_mut() {
-        // No-op for now
-    }
+fn debug_voxels(query: Query<&Voxel>) {
+    // Print how many voxels we have, just as a placeholder
+    println!("Voxel count: {}", query.iter().count());
 }
 
 impl Plugin for VoxelPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, update_voxels);
+        app.add_systems(Update, debug_voxels);
     }
 }
