@@ -1,0 +1,2699 @@
+Add Bevy as a Dependency #
+
+Bevy is available as a library on crates.io.
+
+The easiest way to add it to your project is to use cargo add:
+
+cargo add bevy
+Alternatively, you can manually add it to your project's Cargo.toml like this:
+
+[dependencies]
+bevy = "0.15" # make sure this is the latest version
+
+Getting Started
+This section will help you get started on your Bevy journey as quickly as possible. It will walk you through setting up your development environment and writing a simple Bevy app.
+
+Quick Start #
+If you want to dive in immediately and you already have a working Rust setup, feel free to follow this "quick start" guide. Otherwise, move on to the next page.
+
+Depending on your platform, you may have to install additional dependencies. You can also speed up compile times by following the "fast compiles" section.
+Try the Examples #
+
+Clone the Bevy repo:
+
+git clone https://github.com/bevyengine/bevy
+Navigate to the new "bevy" folder
+
+cd bevy
+Switch to the correct Bevy version (as the default is the git main development branch)
+
+# use the latest Bevy release
+git checkout latest
+# or a specific version
+git checkout v0.14.0
+Try the examples in the examples folder
+
+cargo run --example breakout
+
+Three horizontal lines stacked on top of eachother
+Bevy Engine
+Quick Start
+Bevy Engine
+A saltire or x-cross
+Main Menu
+Quick Start
+Introduction
+Getting Started
+A chevron, or V-shaped symbol
+Setup
+Rust Setup
+Installing Rust
+Installing OS Dependencies
+Code Editor / IDE
+Rust Learning Resources
+Create a new Bevy Project
+Create a new Rust executable project
+Add Bevy as a dependency
+Cargo Workspaces
+Compile with Performance Optimizations
+Enable Fast Compiles (Optional)
+Improve Runtime Performance (Optional)
+Build Bevy
+Apps
+ECS
+Plugins
+Resources
+Next Steps
+Building Bevy's Ecosystem
+Troubleshooting
+Getting Started
+Learn
+News
+Community
+Foundation
+Assets
+Examples
+Donate heart icon
+GitHub repo
+Setup
+I know you are itching to start making games, but we need to do a small amount of setup first.
+
+Rust Setup #
+All Bevy app and engine code is written in Rust. This means that before we begin, we need to set up our Rust development environment.
+
+Installing Rust #
+
+Bevy relies heavily on improvements in the Rust language and compiler. As a result, the Minimum Supported Rust Version (MSRV) is "the latest stable release" of Rust.
+
+Install Rust by following the Rust Getting Started Guide.
+
+Once this is done, you should have the rustc compiler and the cargo build system installed in your path.
+
+Installing OS Dependencies #
+
+Linux #
+Follow the instructions at Linux Dependencies
+
+Windows #
+Run the Visual Studio 2019 build tools installer
+For easy setup, select the Desktop development with C++ workload in the installer.
+For a minimal setup, follow these steps:
+In the installer, navigate to Individual components
+Select the latest MSVC for your architecture and version of Windows
+Select the latest Windows SDK for your version of Windows
+Select the C++ CMake tools for Windows component
+Install the components
+MacOS #
+Install the Xcode command line tools with xcode-select --install or the Xcode app
+
+Code Editor / IDE #
+
+You can use any code editor you want, but we highly recommend one that has a rust-analyzer plugin. It's still in development, but it already provides top-tier autocomplete and code intelligence. Visual Studio Code has an officially supported rust-analyzer extension.
+
+Rust Learning Resources #
+
+The goal of this guide is to get started learning Bevy quickly, so it won't serve as a full Rust education. If you would like to learn more about the Rust language, check out the following resources:
+
+The Rust Book: the best place to learn Rust from scratch
+Rust by Example: learn Rust by working through live coding examples
+Rustlings: learn Rust through a series of fun and interactive exercises
+Create a new Bevy Project #
+Now we are ready to set up a Bevy project! Bevy is just a normal Rust dependency. You can either add it to an existing Rust project or create a new one. For completeness we will assume you are starting from scratch.
+
+Create a new Rust executable project #
+
+First, navigate to a folder where you want to create your new project. Then, run the following command to create a new folder containing our rust executable project:
+
+cargo new my_bevy_game
+cd my_bevy_game
+Now run cargo run to build and run your project. You should see Hello, world! printed to your terminal. Open the my_bevy_game folder in your code editor of choice and take some time to look through the files.
+
+main.rs is the entry point of your program:
+
+fn main() {
+    println!("Hello, world!");
+}
+Cargo.toml is your "project file". It contains metadata about your project such as its name, dependencies, and build configuration.
+
+[package]
+name = "my_bevy_game"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+Add Bevy as a dependency #
+
+Bevy is available as a library on crates.io, the official Rust package repository.
+
+The easiest way to add it to your project is to use cargo add:
+
+cargo add bevy
+Alternate - Manually Add Bevy to Cargo.toml
+Make sure to use the latest bevy crate version (Crates.io).
+
+Cargo Workspaces #
+Compile with Performance Optimizations #
+
+While it may not be an issue for simple projects, debug builds in Rust can be very slow - especially when you start using Bevy to make real games.
+
+It's not uncommon for debug builds using the default configuration to take multiple minutes to load large 3D models, or for the framerate for simple scenes to drop to near-unplayable levels.
+
+Fortunately, there is a simple fix, and we don't have to give up our fast iterative compiles! Add the following to your Cargo.toml:
+
+# Enable a small amount of optimization in the dev profile.
+[profile.dev]
+opt-level = 1
+
+# Enable a large amount of optimization in the dev profile for dependencies.
+[profile.dev.package."*"]
+opt-level = 3
+You might think to simply develop in release mode instead, but we recommend against this as it can worsen the development experience by slowing down recompiles and disabling helpful debug symbols and assertions.
+
+Release Mode Optimizations (Optional)
+When releasing for web, you can pass --profile wasm-release to cargo instead of --release.
+
+Advanced Wasm optimizations (Optional) #
+Enable Fast Compiles (Optional) #
+
+Bevy can be built just fine using default configuration on stable Rust. Unfortunately, the compile times are rather long. This section explains how to speed up iterative compiles: the amount of time it takes to rebuild your project after changing a single file.
+
+Dynamic Linking #
+Alternative Linkers #
+Nightly Rust Compiler #
+Cranelift #
+Generic Sharing #
+Improve Runtime Performance (Optional) #
+Build Bevy #
+
+Now run cargo run again. The Bevy dependencies should start building. This will take some time as you are essentially building an engine from scratch. You will only need to do a full rebuild once. Every build after this one will be fast!
+
+Now that we have our Bevy project set up, we're ready to start making our first Bevy app!
+
+Three horizontal lines stacked on top of eachother
+Bevy Engine
+Quick Start
+Bevy Engine
+A saltire or x-cross
+Main Menu
+Quick Start
+Introduction
+Getting Started
+A chevron, or V-shaped symbol
+Setup
+Apps
+What Makes an App?
+ECS
+Plugins
+Resources
+Next Steps
+Building Bevy's Ecosystem
+Troubleshooting
+Getting Started
+Learn
+News
+Community
+Foundation
+Assets
+Examples
+Donate heart icon
+GitHub repo
+Apps
+Every Bevy program can be referred to as an App. The simplest Bevy app looks like this:
+
+use bevy::prelude::*;
+
+fn main() {
+    App::new().run();
+}
+The use bevy::prelude::* statement brings in the essential things from Bevy. For brevity, this guide may omit it in later steps.
+
+Nice and simple right? Copy the code above into your main.rs file, then run:
+
+cargo run
+in your project folder. You will notice that... nothing happens. This is because we haven't told our app to do anything yet! Apps are just empty shells capable of running our application logic. If you'd like to learn more, then continue reading. Otherwise you can head to the next page to learn how to add logic to our App!
+
+What Makes an App? #
+So, what sort of data does our App really store? Looking at the docs linked, we find three fields: world, schedule, and runner. The world field stores all of our game's data, the schedule holds the systems that operate on this data (and the order in which they do so) and the runner interprets the schedule to control the broad execution strategy. You can read more about these by exploring the reference documentation linked just above.
+
+Generally, you'll be operating at a more granular level than these basic primitives: controlling data in terms of specific resources or components and adding systems to an existing schedule. To do so, customize your own App by chaining its methods with the builder pattern. The most basic tools are:
+
+Initializing resources in the World to store globally available data that we only need a single copy of.
+Adding systems to our Schedule, which can read and modify resources and our entities' components, according to our game logic.
+Importing other blocks of App-modifying code using Plugins.
+We will cover these a bit more in the next pages. Speaking of which, let's finally add some logic to our App using Bevy ECS!
+
+Three horizontal lines stacked on top of eachother
+Bevy Engine
+Quick Start
+Bevy Engine
+A saltire or x-cross
+Main Menu
+Quick Start
+Introduction
+Getting Started
+A chevron, or V-shaped symbol
+Setup
+Apps
+ECS
+Bevy ECS
+Your First System
+Your First Components
+Your First Query
+Your First mutable Query
+Plugins
+Resources
+Next Steps
+Building Bevy's Ecosystem
+Troubleshooting
+Getting Started
+Learn
+News
+Community
+Foundation
+Assets
+Examples
+Donate heart icon
+GitHub repo
+ECS
+All app logic in Bevy uses the Entity Component System paradigm, which is often shortened to ECS. ECS is a software pattern that involves breaking your program up into Entities, Components, and Systems. Entities are unique "things" that are assigned groups of Components, which are then processed using Systems.
+
+For example, one entity might have a Position and Velocity component, whereas another entity might have a Position and UI component. Systems are logic that runs on a specific set of component types. You might have a movement system that runs on all entities with a Position and Velocity component.
+
+The ECS pattern encourages clean, decoupled designs by forcing you to break up your app data and logic into its core components. It also helps make your code faster by optimizing memory access patterns and making parallelism easier.
+
+Bevy ECS #
+Bevy ECS is Bevy's implementation of the ECS pattern. Unlike other Rust ECS implementations, which often require complex lifetimes, traits, builder patterns, or macros, Bevy ECS uses normal Rust datatypes for all of these concepts:
+
+Components: Rust structs that implement the Component trait
+#[derive(Component)]
+struct Position {
+    x: f32,
+    y: f32,
+}
+Systems: normal Rust functions
+fn print_position_system(query: Query<&Position>) {
+    for position in &query {
+        println!("position: {} {}", position.x, position.y);
+    }
+}
+Entities: a simple type containing a unique integer
+struct Entity(u64);
+Now let's see how this works in practice!
+
+Your First System #
+Paste the following function into your main.rs file:
+
+fn hello_world() {
+    println!("hello world!");
+}
+This will be our first system. The only remaining step is to add it to our App!
+
+fn main() {
+    App::new().add_systems(Update, hello_world).run();
+}
+The add_systems function adds the system to your App's Update Schedule, but we'll cover that more later.
+
+Now run your app again using cargo run. You should see hello world! printed once in your terminal.
+
+Your First Components #
+Greeting the whole world is great, but what if we want to greet specific people? In ECS, you would generally model people as entities with a set of components that define them. Let's start simple with a Person component.
+
+Add this struct to your main.rs file:
+
+#[derive(Component)]
+struct Person;
+But what if we want our people to have a name? In a more traditional design, we might just tack on a name: String field to Person. But other entities might have names too! For example, dogs should probably also have a name. It often makes sense to break datatypes up in to small pieces to encourage code reuse. So let's make Name its own component:
+
+#[derive(Component)]
+struct Name(String);
+We can then add people to our World using a "startup system". Startup systems are just like normal systems, but they run exactly once, before all other systems, right when our app starts. Let's use Commands to spawn some entities into our World:
+
+fn add_people(mut commands: Commands) {
+    commands.spawn((Person, Name("Elaina Proctor".to_string())));
+    commands.spawn((Person, Name("Renzo Hume".to_string())));
+    commands.spawn((Person, Name("Zayna Nieves".to_string())));
+}
+Now register the startup system like this:
+
+fn main() {
+    App::new()
+        .add_systems(Startup, add_people)
+        .add_systems(Update, hello_world)
+        .run();
+}
+Your First Query #
+We could run this now and the add_people system would run first, followed by hello_world. But our new people don't have anything to do yet! Let's make a system that properly greets the new citizens of our World:
+
+fn greet_people(query: Query<&Name, With<Person>>) {
+    for name in &query {
+        println!("hello {}!", name.0);
+    }
+}
+The parameters we pass into a "system function" define what data the system runs on. In this case, greet_people will run on all entities with the Person and Name component.
+
+You can interpret the Query above as: "iterate over every Name component for entities that also have a Person component".
+
+Now we just register the system in our App. Note that you can pass more than one system into an add_systems call by using a tuple!
+
+fn main() {
+    App::new()
+        .add_systems(Startup, add_people)
+        .add_systems(Update, (hello_world, greet_people))
+        .run();
+}
+Running our app will result in the following output:
+
+Quick Note: "hello world!" might show up in a different order than it does below. This is because systems run in parallel by default whenever possible.
+
+hello world!
+hello Elaina Proctor!
+hello Renzo Hume!
+hello Zayna Nieves!
+Marvelous!
+
+Your First mutable Query #
+
+If we want to change the names of some people (perhaps they got married!), for example, we can do this using a mutable query:
+
+fn update_people(mut query: Query<&mut Name, With<Person>>) {
+    for mut name in &mut query {
+        if name.0 == "Elaina Proctor" {
+            name.0 = "Elaina Hume".to_string();
+            break; // We don't need to change any other names.
+        }
+    }
+}
+We need to make query mutable, and use a mutable reference (&mut) to the components we want to change.
+
+Don’t forget to add the system to the Update schedule:
+
+fn main() {
+    App::new()
+        .add_systems(Startup, add_people)
+        .add_systems(Update, (hello_world, (update_people, greet_people).chain()))
+        .run();
+}
+Note that we have used .chain() on the two systems. This is because we want both of them to run in exactly the order they're listed in the code: with update_people occurring before greet_people. If they weren’t, the name might change after we greet the people.
+
+But we don’t add the hello_world system to the chain, because it doesn’t matter when it runs. This way, Bevy can run hello_world in parallel while the other systems are running.
+
+Three horizontal lines stacked on top of eachother
+Bevy Engine
+Quick Start
+Bevy Engine
+A saltire or x-cross
+Main Menu
+Quick Start
+Introduction
+Getting Started
+A chevron, or V-shaped symbol
+Setup
+Apps
+ECS
+Plugins
+Bevy's Default Plugins
+Creating your first plugin
+Resources
+Next Steps
+Building Bevy's Ecosystem
+Troubleshooting
+Getting Started
+Learn
+News
+Community
+Foundation
+Assets
+Examples
+Donate heart icon
+GitHub repo
+Plugins
+One of Bevy's core principles is modularity. All Bevy engine features are implemented as plugins---collections of code that modify an App. This includes internal features like the renderer, but games themselves are also implemented as plugins! This empowers developers to pick and choose which features they want. Don't need a UI? Don't register the UiPlugin. Want to build a headless server? Don't register the RenderPlugin.
+
+This also means you are free to replace any components you don't like. If you feel the need, you are welcome to build your own UiPlugin, but consider contributing it back to Bevy if you think it would be useful!
+
+Those not contributed back into Bevy and instead released separately are third-party plugins. These are useful and easy to use additions created by fellow developers that can help you avoid re-inventing the wheel. To use them all you have to do is:
+
+Find a third party Bevy plugin (like those at the Assets page).
+Add it to your Cargo.toml as a crate under [dependencies].
+Import the code definitions (like use third_party::prelude::*;) from the crate to add the items to your workspace.
+Add the plugin to your app (like app.add_plugins(third_party_plugin)).
+However, most developers don't need a custom experience and just want the "full engine" experience with no hassle. For this, Bevy provides a set of DefaultPlugins.
+
+Bevy's Default Plugins #
+Let's make our app more interesting by adding Bevy's DefaultPlugins which are a PluginGroup containing core engine features. (For those needing minimal features, MinimalPlugins exists). add_plugins(DefaultPlugins) adds the features most people expect from an engine, such as a 2D / 3D renderer, asset loading, a UI system, windows, and input.
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_systems(Startup, add_people)
+        .add_systems(Update, (hello_world, (update_people, greet_people).chain()))
+        .run();
+}
+Once again run cargo run.
+
+You should hopefully notice two things:
+
+A window should pop up. This is because we now have WindowPlugin, which defines the window interface (but doesn't actually know how to make windows), and [WinitPlugin] which uses the winit library to create a window using your OS's native window API.
+Your console is now full of "hello" messages: This is because DefaultPlugins adds an "event loop" to our application. Our App's ECS Schedule now runs in a loop once per "frame". We will resolve the console spam in a moment.
+Creating your first plugin #
+For better organization, let's move all of our "hello" logic to a plugin. To create a plugin we just need to implement the Plugin interface. Add the following code to your main.rs file:
+
+pub struct HelloPlugin;
+
+impl Plugin for HelloPlugin {
+    fn build(&self, app: &mut App) {
+        // add things to your app here
+    }
+}
+Then register the plugin in your App like this:
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_plugins(HelloPlugin)
+        .add_systems(Startup, add_people)
+        .add_systems(Update, (hello_world, (update_people, greet_people).chain()))
+        .run();
+}
+Note add_plugins can add any number of plugins (or plugin groups like DefaultPlugins) by passing in a tuple of them. Now all that's left is to move our systems into HelloPlugin, which is just a matter of cut and paste. The app variable in our plugin's build() function is the same builder type we use in our main() function:
+
+impl Plugin for HelloPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(Startup, add_people);
+        app.add_systems(Update, (hello_world, (update_people, greet_people).chain()));
+    }
+}
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_plugins(HelloPlugin)
+        .run();
+}
+Try running the app again. It should do exactly what it did before. In the next section, we'll fix the "hello" spam using Resources.
+
+Three horizontal lines stacked on top of eachother
+Bevy Engine
+Quick Start
+Bevy Engine
+A saltire or x-cross
+Main Menu
+Quick Start
+Introduction
+Getting Started
+A chevron, or V-shaped symbol
+Setup
+Apps
+ECS
+Plugins
+Resources
+Tracking Time with Resources
+Next Steps
+Building Bevy's Ecosystem
+Troubleshooting
+Getting Started
+Learn
+News
+Community
+Foundation
+Assets
+Examples
+Donate heart icon
+GitHub repo
+Resources
+The Entity and Component data types are great for representing complex, query-able groups of data. But most Apps will also require "globally unique" data of some kind. In Bevy ECS, we represent globally unique data using the Resource trait.
+
+Here are some examples of data that could be encoded as a Resource:
+
+Elapsed Time
+Asset Collections (sounds, textures, meshes)
+Renderers
+Tracking Time with Resources #
+Let's solve our App's "hello spam" problem by only printing "hello" once every two seconds. We'll do this by using the Time resource, which is automatically added to our App via add_plugins(DefaultPlugins).
+
+For simplicity, remove the hello_world system from your App. This way we only need to adapt the greet_people system.
+
+Resources are accessed in much the same way that we access components. You can access the Time resource in your system like this:
+
+fn greet_people(time: Res<Time>, query: Query<&Name, With<Person>>) {
+    for name in &query {
+        println!("hello {}!", name.0);
+    }
+}
+Res and ResMut pointers provide read and write access (respectively) to resources.
+
+The delta field on Time gives us the time that has passed since the last update. But in order to run our system once every two seconds, we must track the amount of time that has passed over a series of updates. To make this easier, Bevy provides the Timer type. Let's create a new Resource to track elapsed time with a Timer:
+
+#[derive(Resource)]
+struct GreetTimer(Timer);
+And use it in our system:
+
+fn greet_people(time: Res<Time>, mut timer: ResMut<GreetTimer>, query: Query<&Name, With<Person>>) {
+    // update our timer with the time elapsed since the last update
+    // if that caused the timer to finish, we say hello to everyone
+    if timer.0.tick(time.delta()).just_finished() {
+        for name in &query {
+            println!("hello {}!", name.0);
+        }
+    }
+}
+Now all that's left is adding a GreetTimer Resource to our HelloPlugin. Use TimerMode::Repeating to make the timer repeat.
+
+impl Plugin for HelloPlugin {
+    fn build(&self, app: &mut App) {
+        app.insert_resource(GreetTimer(Timer::from_seconds(2.0, TimerMode::Repeating)));
+        app.add_systems(Startup, add_people);
+        app.add_systems(Update, (update_people, greet_people).chain());
+    }
+}
+Now cargo run the App. It should now greet people at a reasonable rate.
+
+Introduction
+Chapter Overview
+List of Bevy Builtins
+1. Bevy Tutorials
+1.1. Guided Tour
+2. Bevy Cookbook
+2.1. Show Framerate
+2.2. Convert cursor to world coordinates
+2.3. Transform Interpolation/Extrapolation
+2.4. 3D Pan+Orbit Camera
+2.5. Custom Camera Projection
+2.6. List All Resource Types
+3. Bevy Setup Tips
+3.1. Getting Started
+3.2. Text Editor / IDE
+3.2.1. Visual Studio Code
+3.2.2. JetBrains (RustRover, IntelliJ, CLion)
+3.2.3. Kakoune
+3.2.4. Vim
+3.2.5. Emacs
+3.3. Customizing Bevy (features, modularity)
+3.4. Community Plugin Ecosystem
+3.5. Dev Tools and Editors for Bevy
+3.6. Performance Tunables
+3.7. Using bleeding-edge Bevy (main)
+4. Common Pitfalls
+4.1. Strange compile errors from Bevy or dependencies
+4.2. Slow Performance
+4.3. Error adding function as system
+4.4. 3D objects not displaying
+4.5. Borrow multiple fields from struct
+4.6. Jittering Time (choppy movement/animation)
+4.7. Textures/Images are flipped
+5. Game Engine Fundamentals
+5.1. Coordinate System
+5.2. Transforms
+5.3. Visibility
+5.4. Time and Timers
+5.5. Logging, Console Messages
+5.6. Parent/Child Hierarchies
+5.7. Fixed Timestep
+5.8. Background Computation
+5.9. Gizmos
+6. General Graphics Features
+6.1. Cameras
+6.2. HDR and Tonemapping
+6.3. Bloom
+7. Working with 2D
+7.1. 2D Camera Setup
+7.2. Sprites and Atlases
+8. Working with 3D
+8.1. 3D Camera Setup
+8.2. 3D Models and Scenes (GLTF)
+9. Input Handling
+9.1. Keyboard
+9.2. Mouse
+9.3. Gamepad (Controller, Joystick)
+9.4. Touchscreen
+9.5. Gestures
+9.6. Drag-and-Drop (Files)
+9.7. IME (Advanced Text)
+10. Window Management
+10.1. Window Properties
+10.2. Change the Background Color
+10.3. Grab/Capture the Mouse Cursor
+10.4. Set the Window Icon
+11. Asset Management
+11.1. Handles
+11.2. Load Assets from Files
+11.3. Access the Asset Data
+11.4. React to Changes with Asset Events
+11.5. Track Loading Progress
+11.6. Hot-Reloading Assets
+11.7. Processing Assets
+12. Audio
+12.1. Playing Sounds
+12.2. Spatial Audio
+12.3. Custom Audio Streams
+13. Bevy UI Framework
+14. Bevy Core Programming Framework
+14.1. Intro to ECS
+14.2. Intro: Your Data
+14.3. Intro: Your Code
+14.4. The App
+14.5. Systems
+14.6. Resources
+14.7. Entities, Components
+14.8. Bundles
+14.9. Queries
+14.10. Commands
+14.11. Events
+14.12. Plugins
+14.13. Local Resources
+14.14. Exclusive Systems
+14.15. Direct ECS World Access
+14.16. Schedules
+14.17. System Order of Execution
+14.18. Run Conditions
+14.19. System Sets
+14.20. States
+14.21. Change Detection
+14.22. One-Shot Systems
+14.23. Internal Parallelism
+14.24. System Piping
+14.25. ParamSet
+14.26. Non-Send
+15. Bevy Render (GPU) Framework
+15.1. Render Architecture Overview
+15.2. Render Stages
+16. Programming Patterns
+16.1. Generic Systems
+16.2. Component Storage (Table/Sparse-Set)
+16.3. Manual Event Clearing
+16.4. Writing Tests for Systems
+17. Bevy on Different Platforms
+17.1. Linux Desktop
+17.2. macOS Desktop
+17.3. Windows Desktop
+17.3.1. Working in WSL2
+17.4. Browser (WebAssembly)
+17.4.1. Optimize for Size
+17.4.2. Create a Custom Web Page
+17.4.3. Hosting on GitHub Pages
+17.5. Cross-Compilation
+17.5.1. From Linux to Windows
+17.5.2. From macOS to Windows
+Credits
+Contact Me
+Contribute to Bevy
+Contribute to this Book
+ 
+
+Unofficial Bevy Cheat Book
+ 
+Bevy Version:	(any)
+Chapter Overview
+
+The Bevy Builtins page is a concise cheatsheet of useful information about types and features provided by Bevy.
+
+The Bevy Tutorials chapter is for tutorials/guides that you can follow from start to finish.
+
+The Bevy Cookbook is for more self-contained / narrow-scoped examples that teach you how to solve specific problems.
+
+The rest of the book is designed as a reference, covering different aspects of working with Bevy. Feel free to jump around the book, to learn about any topic that interests you. On every page of the book, any time other topics are mentioned, the relevant pages or official API documentation is linked.
+
+If you would like a guided experience, or to browse the book by relative difficulty (from beginner to advanced), try the guided tutorial page. It recommends topics in a logical order for learning.
+
+The book has the following general chapters:
+
+Bevy Setup Tips: project setup advice, recommendations for tools and plugins
+Common Pitfalls: solutions for common issues encountered by the community
+Bevy on Different Platforms: information about working with specific plaforms / OSs
+To learn how to program in Bevy, see these chapters:
+
+Bevy Core Programming Framework: the ECS+App frameworks, the foundation of everything
+Programming Patterns: opinionated advice, patterns, idioms
+Bevy Render (GPU) Framework: working with the GPU and Bevy's rendering
+The following chapters cover various Bevy feature areas:
+
+Game Engine Fundamentals
+General Graphics Features
+Working with 2D
+Working with 3D
+Input Handling
+Window Management
+Asset Management
+Audio
+Bevy UI Framework
+ GitHub SponsorsPatreonBitcoin If you like this book, please donate to support me!
+
+Introduction
+Chapter Overview
+List of Bevy Builtins
+1. Bevy Tutorials
+1.1. Guided Tour
+2. Bevy Cookbook
+2.1. Show Framerate
+2.2. Convert cursor to world coordinates
+2.3. Transform Interpolation/Extrapolation
+2.4. 3D Pan+Orbit Camera
+2.5. Custom Camera Projection
+2.6. List All Resource Types
+3. Bevy Setup Tips
+3.1. Getting Started
+3.2. Text Editor / IDE
+3.2.1. Visual Studio Code
+3.2.2. JetBrains (RustRover, IntelliJ, CLion)
+3.2.3. Kakoune
+3.2.4. Vim
+3.2.5. Emacs
+3.3. Customizing Bevy (features, modularity)
+3.4. Community Plugin Ecosystem
+3.5. Dev Tools and Editors for Bevy
+3.6. Performance Tunables
+3.7. Using bleeding-edge Bevy (main)
+4. Common Pitfalls
+4.1. Strange compile errors from Bevy or dependencies
+4.2. Slow Performance
+4.3. Error adding function as system
+4.4. 3D objects not displaying
+4.5. Borrow multiple fields from struct
+4.6. Jittering Time (choppy movement/animation)
+4.7. Textures/Images are flipped
+5. Game Engine Fundamentals
+5.1. Coordinate System
+5.2. Transforms
+5.3. Visibility
+5.4. Time and Timers
+5.5. Logging, Console Messages
+5.6. Parent/Child Hierarchies
+5.7. Fixed Timestep
+5.8. Background Computation
+5.9. Gizmos
+6. General Graphics Features
+6.1. Cameras
+6.2. HDR and Tonemapping
+6.3. Bloom
+7. Working with 2D
+7.1. 2D Camera Setup
+7.2. Sprites and Atlases
+8. Working with 3D
+8.1. 3D Camera Setup
+8.2. 3D Models and Scenes (GLTF)
+9. Input Handling
+9.1. Keyboard
+9.2. Mouse
+9.3. Gamepad (Controller, Joystick)
+9.4. Touchscreen
+9.5. Gestures
+9.6. Drag-and-Drop (Files)
+9.7. IME (Advanced Text)
+10. Window Management
+10.1. Window Properties
+10.2. Change the Background Color
+10.3. Grab/Capture the Mouse Cursor
+10.4. Set the Window Icon
+11. Asset Management
+11.1. Handles
+11.2. Load Assets from Files
+11.3. Access the Asset Data
+11.4. React to Changes with Asset Events
+11.5. Track Loading Progress
+11.6. Hot-Reloading Assets
+11.7. Processing Assets
+12. Audio
+12.1. Playing Sounds
+12.2. Spatial Audio
+12.3. Custom Audio Streams
+13. Bevy UI Framework
+14. Bevy Core Programming Framework
+14.1. Intro to ECS
+14.2. Intro: Your Data
+14.3. Intro: Your Code
+14.4. The App
+14.5. Systems
+14.6. Resources
+14.7. Entities, Components
+14.8. Bundles
+14.9. Queries
+14.10. Commands
+14.11. Events
+14.12. Plugins
+14.13. Local Resources
+14.14. Exclusive Systems
+14.15. Direct ECS World Access
+14.16. Schedules
+14.17. System Order of Execution
+14.18. Run Conditions
+14.19. System Sets
+14.20. States
+14.21. Change Detection
+14.22. One-Shot Systems
+14.23. Internal Parallelism
+14.24. System Piping
+14.25. ParamSet
+14.26. Non-Send
+15. Bevy Render (GPU) Framework
+15.1. Render Architecture Overview
+15.2. Render Stages
+16. Programming Patterns
+16.1. Generic Systems
+16.2. Component Storage (Table/Sparse-Set)
+16.3. Manual Event Clearing
+16.4. Writing Tests for Systems
+17. Bevy on Different Platforms
+17.1. Linux Desktop
+17.2. macOS Desktop
+17.3. Windows Desktop
+17.3.1. Working in WSL2
+17.4. Browser (WebAssembly)
+17.4.1. Optimize for Size
+17.4.2. Create a Custom Web Page
+17.4.3. Hosting on GitHub Pages
+17.5. Cross-Compilation
+17.5.1. From Linux to Windows
+17.5.2. From macOS to Windows
+Credits
+Contact Me
+Contribute to Bevy
+Contribute to this Book
+ 
+
+Unofficial Bevy Cheat Book
+ 
+Bevy Version:	0.14	(outdated!)
+As this page is outdated, please refer to Bevy's official migration guides while reading, to cover the differences: 0.14 to 0.15.
+
+I apologize for the inconvenience. I will update the page as soon as I find the time.
+
+Strange Build Errors
+
+Sometimes, you can get strange and confusing build errors when trying to compile your project.
+
+If none of the advice on this page helps you, your issue might require further investigation. Reach out to the Bevy community via GitHub or Discord, and ask for help.
+
+If you are using bleeding-edge Bevy ("main"), also see this page for advice.
+
+Update your Rust
+
+First, make sure your Rust is up-to-date. Bevy only officially supports the latest stable version of Rust at the time the Bevy version you are using was released, or nightly.
+
+If you are using rustup to manage your Rust installation, you can run:
+
+rustup update
+Clear the cargo state
+
+Many kinds of build errors can often be fixed by forcing cargo to regenerate its internal state (recompute dependencies, etc.). You can do this by deleting the Cargo.lock file and the target directory.
+
+rm -rf target Cargo.lock
+Try building your project again after doing this. It is likely that the mysterious errors will go away.
+
+Multiple versions of dependencies
+
+If not, another reason might be that you have multiple versions of Bevy (or other dependencies) in your dependency tree. Rust/cargo allows multiple versions of the same crate to be linked at the same time into the same executable.
+
+If you are using 3rd-party plugins, make sure you have specified the correct versions of all the plugins you use and that they are compatible with the Bevy version you are using. If you depend on a plugin that uses a different version of Bevy from the one you are using, they will not be interoperable.
+
+You will get compiler errors like:
+
+error[E0308]: mismatched types
+  --> src/main.rs:12:20
+   |
+12 |         transform: Transform::from_xyz(1.0, 2.0, 3.0),
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Transform`, found a different `Transform`
+   |
+   = note: `Transform` and `Transform` have similar names, but are actually distinct types
+note: `Transform` is defined in crate `bevy_transform`
+  --> /home/iyes/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_transform-0.14.0-rc.2/src/components/transform.rs:43:1
+   |
+43 | pub struct Transform {
+   | ^^^^^^^^^^^^^^^^^^^^
+note: `Transform` is defined in crate `bevy_transform`
+  --> /home/iyes/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_transform-0.12.1/src/components/transform.rs:41:1
+   |
+41 | pub struct Transform {
+   | ^^^^^^^^^^^^^^^^^^^^
+   = note: perhaps two different versions of crate `bevy_transform` are being used?
+
+Or perhaps errors about common Bevy traits like Component, Bundle, or Plugins not being implemented on types that clearly should have them.
+
+New Cargo Resolver
+
+Cargo recently added a new dependency resolver algorithm, that is incompatible with the old one. Bevy requires the new resolver.
+
+If you are just creating a new blank Cargo project, don't worry. This should already be setup correctly by cargo new.
+
+If you are getting weird compiler errors from Bevy dependencies, read on. Make sure you have the correct configuration, and then clear the cargo state.
+
+Single-Crate Projects
+
+In a single-crate project (if you only have one Cargo.toml file in your project), if you are using the latest Rust2021 Edition, the new resolver is automatically enabled.
+
+So, you need either one of these settings in your Cargo.toml:
+
+[package]
+edition = "2021"
+or
+
+[package]
+resolver = "2"
+Multi-Crate Workspaces
+
+In a multi-crate Cargo workspace, the resolver is a global setting for the whole workspace. It will not be enabled by default.
+
+This can bite you if you are transitioning a single-crate project into a workspace.
+
+You must add it manually to the top-level Cargo.toml for your Cargo Workspace:
+
+BEVY IS NOW IN .15!!!!!!!
+
+Three horizontal lines stacked on top of eachother
+Bevy Engine
+Migration Guides
+Bevy Engine
+A saltire or x-cross
+Main Menu
+Migration Guides
+Introduction
+0.14 to 0.15
+Accessibility
+Bump accesskit to 0.16
+Remove accesskit re-export from bevy_a11y
+Animation
+Deprecate is_playing_animation
+Fix additive blending of quaternions
+Implement additive blending for animation graphs.
+Implement animation masks, allowing fine control of the targets that animations affect.
+Impose a more sensible ordering for animation graph evaluation.
+Make AnimationPlayer::start and ::play work accordingly to documentation
+Replace Handle<AnimationGraph> component with a wrapper
+Curve-based animation
+Allow animation clips to animate arbitrary properties.
+App
+Add features to switch NativeActivity and GameActivity usage
+Allow ordering variable timesteps around fixed timesteps
+Remove deprecated bevy_dynamic_plugin
+Remove need for EventLoopProxy to be NonSend
+Remove second generic from .add_before, .add_after
+Handle Ctrl+C in the terminal properly
+Assets
+AssetServer LoadState API consistency
+Cleanup unneeded lifetimes in bevy_asset
+Generalized Into<AssetSourceId> and Into<AssetPath> Implementations over Lifetime
+Improve error handling for AssetServer::add_async
+Remove incorrect equality comparisons for asset load error types
+Replace AsyncSeek trait by AsyncSeekForward for Reader to address #12880
+bevy_asset: Improve NestedLoader API
+Deprecate LoadAndSave Asset Processor
+AssetReader::read now returns an opaque type
+Make gLTF node children Handle instead of objects
+Split TextureAtlasSources out of TextureAtlasLayout and make TextureAtlasLayout serializable
+Export glTF skins as a Gltf struct
+Replace bevy_utils::CowArc with atomicow
+Audio
+Migrate audio to required components
+Build-System
+Use en-us locale for typos
+Color
+Adds back in way to convert color to u8 array, implemented for the two RGB color types, also renames Color::linear to Color::to_linear.
+Update Grid Gizmo to use Color
+Core
+Rename bevy_core::name::DebugName to bevy_core::name::NameOrEntity
+Cross-Cutting
+Remove the Component trait implementation from Handle
+Fix floating point math
+Don't reëxport bevy_image from bevy_render
+Add custom cursors
+Diagnostics
+Don't ignore draw errors
+ECS
+Make World::flush_commands private
+Add FilteredAccess::empty and simplify the implementation of update_component_access for AnyOf/Or
+Add mappings to EntityMapper
+Add query reborrowing
+Allow World::entity family of functions to take multiple entities and get multiple references back
+Change World::inspect_entity to return an Iterator instead of Vec
+Created an EventMutator for when you want to mutate an event before reading
+Deprecate Events::oldest_id
+Deprecate get_or_spawn
+Enable EntityRef::get_by_id and friends to take multiple ids and get multiple pointers back
+EntityRef/Mut get_components (immutable variants only)
+Fix soudness issue with Conflicts involving read_all and write_all
+Follow up to cached run_system
+List components for QueryEntityError::QueryDoesNotMatch
+Make QueryFilter an unsafe trait
+Make QueryState::transmute&co validate the world of the &Components used
+Re-name and Extend Run Conditions API
+Remove redundant information and optimize dynamic allocations in Table
+Removed Type Parameters from Observer
+Rename Add to Queue for methods with deferred semantics
+Rename App/World::observe to add_observer, EntityWorldMut::observe_entity to observe.
+Rename Commands::register_one_shot_system -> register_system
+Rename init_component & friends
+Rename observe to observe_entity on EntityWorldMut
+Rename push children to add children
+Require &mut self for World::increment_change_tick
+Simplify run conditions
+Support more kinds of system params in buildable systems.
+Support systems that take references as input
+System param validation for observers, system registry and run once
+Track source location in change detection
+Update trigger_observers to operate over slices of data
+IntoSystemConfigs::chain_ignore_deferred's return type fix
+bevy_ecs: Special-case Entity::PLACEHOLDER formatting
+change return type of World::resource_ref to Ref
+Minimal Bubbling Observers
+Make ComponentTicks field public
+Change ReflectMapEntities to operate on components before insertion
+Bubbling observers traversal should use query data
+Migrate bevy picking
+ReflectBundle::remove improvement
+Use crate: disqualified
+Migrate cameras to required components
+Migrate fog volumes to required components
+Migrate meshes and materials to required components
+Migrate motion blur, TAA, SSAO, and SSR to required components
+Migrate reflection probes to required components
+Migrate visibility to required components
+Synchronize removed components with the render world
+Deprecate SpatialBundle
+Migrate bevy_transform to required components
+Gizmos
+Consistency between Wireframe2d and Wireframe
+Fix Gizmos warnings and doc errors when a subset of features are selected
+Fix arc_2d Gizmos
+Improve the gizmo for Plane3d, reusing grid
+Making bevy_render an optional dependency for bevy_gizmos
+Use Isometry in bevy_gizmos wherever we can
+Use u32 for all resolution/subdivision fields in bevy_gizmos
+Switch rotation & translation in grid gizmos
+Make TrackedRenderPass::set_vertex_buffer aware of slice size
+Hierarchy
+Only propagate transforms entities with GlobalTransforms.
+Input
+Gamepad improvements
+Implement gamepads as entities
+Remove ReceivedCharacter
+Use Name component for gamepad
+Picking event ordering
+Math
+Added new method to Cone 3D primitive
+Basic integration of cubic spline curves with the Curve API
+Disallow empty cubic and rational curves
+Refactor Bounded2d/Bounded3d to use isometries
+Rename Rot2::angle_between to Rot2::angle_to
+Use Dir2/Dir3 instead of Vec2/Vec3 for Ray2d::new/Ray3d::new
+Use a well defined type for sides in RegularPolygon
+bevy_reflect: Update EulerRot to match glam 0.29
+Use u32 for resolution/subdivision in primitive meshing
+Picking
+Add flags to SpritePlugin and UiPlugin to allow disabling their picking backend (without needing to disable features).
+rename Drop to bevy::picking::events::DragDrop to unclash std::ops:Drop
+Reflection
+Dedicated Reflect implementation for Set-like things
+Implement FromIterator/IntoIterator for dynamic types
+Make drain take a mutable borrow instead of Box<Self> for reflected Map, List, and Set.
+Remove Return::Unit variant
+Serialize and deserialize tuple struct with one field as newtype struct
+bevy_reflect: Add DynamicTyped trait
+bevy_reflect: Add ReflectDeserializerProcessor
+bevy_reflect: Add Type type
+bevy_reflect: Nested TypeInfo getters
+bevy_reflect: Refactor serde module
+bevy_reflect: Replace "value" terminology with "opaque"
+reflect: implement the unique reflect rfc
+Use FromReflect when extracting entities in dynamic scenes
+move ShortName to bevy_reflect
+Rendering
+Retained Rendering
+Add 2d opaque phase with depth buffer
+Add RenderSet::FinalCleanup for World::clear_entities
+Add feature requirement info to image loading docs
+Add support for environment map transformation
+Add support for skybox transformation
+Added feature switch to default Standard Material's new anisotropy texture to off
+Added visibility bitmask as an alternative SSAO method
+Adding alpha_threshold to OrderIndependentTransparencySettings for user-level optimization
+Adds ShaderStorageBuffer asset
+Allow mix of hdr and non-hdr cameras to same render target
+Allow volumetric fog to be localized to specific, optionally voxelized, regions.
+Attempt to remove component from render world if not extracted.
+Bind only the written parts of storage buffers.
+Changed Mesh::attributes* functions to return MeshVertexAttribute
+Expose Pipeline Compilation Zero Initialize Workgroup Memory Option
+Feature-gate all image formats
+Fix Mesh allocator bug and reduce Mesh data copies by two
+Improve API for scaling orthographic cameras
+Lighting Should Only hold Vec<Entity> instead of TypeId<Vec<Entity>>
+Migrate bevy_sprite to required components
+Migrate lights to required components
+Move ImageLoader and CompressedImageSaver to bevy_image.
+Move Msaa to component
+Only use the AABB center for mesh visibility range testing if specified.
+Pack multiple vertex and index arrays together into growable buffers.
+Reduce the clusterable object UBO size below 16384 for WebGL 2.
+Refactor AsBindGroup to use a associated SystemParam.
+Remove AVIF feature
+Remove OrthographicProjection.scale (adopted)
+Rename rendering components for improved consistency and clarity
+Replace the wgpu_trace feature with a field in bevy_render::settings::WgpuSettings
+Replaced implicit emissive weight with default.
+Return Results from Camera's world/viewport conversion methods
+Rewrite screenshots.
+Split OrthographicProjection::default into 2d & 3d (Adopted)
+Split out bevy_mesh from bevy_render
+Using Cas instead of CAS #14341
+Virtual Geometry changes
+Wgpu 0.20
+check sampler type in as_bind_group derives
+cleanup bevy_render/lib.rs
+Fix UI texture atlas with offset
+Make default behavior for BackgroundColor and BorderColor more intuitive
+Optional UI rendering
+use precomputed border values
+Inverse bevy_render bevy_winit dependency and move cursor to bevy_winit
+Scenes
+Align Scene::write_to_world_with to match DynamicScene::write_to_world_with
+Align Scene::write_to_world_with to match DynamicScene::write_to_world_with
+Change SceneInstanceReady to trigger an observer.
+Migrate scenes to required components
+Send SceneInstanceReady when spawning any kind of scene
+explicitly mention component in methods on DynamicSceneBuilder
+Tasks
+Support on_thread_spawn and on_thread_destroy for TaskPoolPlugin
+Text
+Text Rework cleanup
+Text rework
+Uncouple DynamicTextureAtlasBuilder from assets
+split up TextStyle
+Add the ability to control font smoothing
+Cosmic text
+Time
+aligning public apis of Time,Timer and Stopwatch
+UI
+Add UI GhostNode
+Clean up UiSystem system sets
+Migrate UI bundles to required components
+Move TextureAtlas into UiImage and remove impl Component for TextureAtlas
+Only use physical coords internally in bevy_ui
+Overflow clip margin
+Remove custom rounding
+Remove useless Direction field
+Rename BreakLineOn to LineBreak
+Replace Handle<M: UiMaterial> component with UiMaterialHandle wrapper
+Simplified ui_stack_system
+UiImage -> ImageNode, UiImageSize -> ImageNodeSize
+Explicitly order CameraUpdateSystem before UiSystem::Prepare
+Utils
+Allow bevy_utils in no_std Contexts
+Remove allocation in get_short_name
+Remove remnant EntityHash and related types from bevy_utils
+Remove unused type parameter in Parallel::drain()
+Windowing
+Add bevy_window::Window options for MacOS
+Expose winit's MonitorHandle
+Remove unused default feature from bevy_window
+move ANDROID_APP to bevy_window
+Without area
+Add Display implementation to DebugName.
+0.13 to 0.14
+0.12 to 0.13
+0.11 to 0.12
+0.10 to 0.11
+0.9 to 0.10
+0.8 to 0.9
+0.7 to 0.8
+0.6 to 0.7
+0.5 to 0.6
+0.4 to 0.5
+Getting Started
+Learn
+News
+Community
+Foundation
+Assets
+Examples
+Donate heart icon
+GitHub repo
+Migration Guide: 0.14 to 0.15
+Bevy relies heavily on improvements in the Rust language and compiler. As a result, the Minimum Supported Rust Version (MSRV) is "the latest stable release" of Rust.
+Accessibility #
+Bump accesskit to 0.16 #
+PR #14091
+Accessibility
+UI
+accesskit’s Role::StaticText variant has been renamed to Role::Label.
+
+Remove accesskit re-export from bevy_a11y #
+PR #16257
+Accessibility
+# main.rs
+--    use bevy_a11y::{
+--        accesskit::{Node, Rect, Role},
+--        AccessibilityNode,
+--    };
+++    use bevy_a11y::AccessibilityNode;
+++    use accesskit::{Node, Rect, Role};
+
+# Cargo.toml
+++    accesskit = "0.17"
+Users will need to add accesskit = "0.17" to the dependencies section of their Cargo.toml file and update their accesskit use statements to come directly from the external crate instead of bevy_a11y.
+Make sure to keep the versions of accesskit aligned with the versions Bevy uses.
+Animation #
+Deprecate is_playing_animation #
+PR #14387
+Animation
+The user will just need to replace functions named is_playing_animation with animation_is_playing.
+
+Fix additive blending of quaternions #
+PR #15662
+Animation
+This PR changes the implementation of Quat: Animatable, which was not used internally by Bevy prior to this release version. If you relied on the old behavior of additive quaternion blending in manual applications, that code will have to be updated, as the old behavior was incorrect.
+
+Implement additive blending for animation graphs. #
+PR #15631
+Animation
+The animgraph.ron format has changed to accommodate the new additive blending feature. You’ll need to change clip fields to instances of the new AnimationNodeType enum.
+Implement animation masks, allowing fine control of the targets that animations affect. #
+PR #15013
+Animation
+The serialized format of animation graphs has changed with the addition of animation masks. To upgrade animation graph RON files, add mask and mask_groups fields as appropriate. (They can be safely set to zero.)
+Impose a more sensible ordering for animation graph evaluation. #
+PR #15589
+Animation
+The order in which animation graphs are evaluated has been changed to be more intuitive. Please see the diagram in the linked PR for a detailed explanation.
+
+Make AnimationPlayer::start and ::play work accordingly to documentation #
+PR #14546
+Animation
+AnimationPlayer::start now correspondingly to its docs restarts a running animation. AnimationPlayer::play doesn’t reset the weight anymore.
+
+Replace Handle<AnimationGraph> component with a wrapper #
+PR #15742
+Animation
+Handle<AnimationGraph> is no longer a component. Instead, use the AnimationGraphHandle component which contains a Handle<AnimationGraph>.
+
+Curve-based animation #
+PR #15434
+Animation
+Math
+Most user code that does not directly deal with AnimationClip and VariableCurve will not need to be changed. On the other hand, VariableCurve has been completely overhauled. If you were previously defining animation curves in code using keyframes, you will need to migrate that code to use curve constructors instead. For example, a rotation animation defined using keyframes and added to an animation clip like this:
+
+animation_clip.add_curve_to_target(
+    animation_target_id,
+    VariableCurve {
+        keyframe_timestamps: vec![0.0, 1.0, 2.0, 3.0, 4.0],
+        keyframes: Keyframes::Rotation(vec![
+            Quat::IDENTITY,
+            Quat::from_axis_angle(Vec3::Y, PI / 2.),
+            Quat::from_axis_angle(Vec3::Y, PI / 2. * 2.),
+            Quat::from_axis_angle(Vec3::Y, PI / 2. * 3.),
+            Quat::IDENTITY,
+        ]),
+        interpolation: Interpolation::Linear,
+    },
+);
+would now be added like this:
+
+animation_clip.add_curve_to_target(
+    animation_target_id,
+    AnimatableKeyframeCurve::new([0.0, 1.0, 2.0, 3.0, 4.0].into_iter().zip([
+        Quat::IDENTITY,
+        Quat::from_axis_angle(Vec3::Y, PI / 2.),
+        Quat::from_axis_angle(Vec3::Y, PI / 2. * 2.),
+        Quat::from_axis_angle(Vec3::Y, PI / 2. * 3.),
+        Quat::IDENTITY,
+    ]))
+    .map(RotationCurve)
+    .expect("Failed to build rotation curve"),
+);
+Note that the interface of AnimationClip::add_curve_to_target has also changed (as this example shows, if subtly), and now takes its curve input as an impl AnimationCurve. If you need to add a VariableCurve directly, a new method add_variable_curve_to_target accommodates that (and serves as a one-to-one migration in this regard).
+
+For reviewers
+
+The diff is pretty big, and the structure of some of the changes might not be super-obvious:
+
+keyframes.rs became animation_curves.rs, and AnimationCurve is based heavily on Keyframes, with the adaptors also largely following suite.
+The Curve API adaptor structs were moved from bevy_math::curve::mod into their own module adaptors. There are no functional changes to how these adaptors work; this is just to make room for the specialized reflection implementations since mod.rs was getting kind of cramped.
+The new module gltf_curves holds the additional curve constructions that are needed by the glTF loader. Note that the loader uses a mix of these and off-the-shelf bevy_math curve stuff.
+animatable.rs no longer holds logic related to keyframe interpolation, which is now delegated to the existing abstractions in bevy_math::curve::cores.
+Allow animation clips to animate arbitrary properties. #
+PR #15282
+Animation
+Reflection
+Animation keyframes are now an extensible trait, not an enum. Replace Keyframes::Translation(...), Keyframes::Scale(...), Keyframes::Rotation(...), and Keyframes::Weights(...) with Box::new(TranslationKeyframes(...)), Box::new(ScaleKeyframes(...)), Box::new(RotationKeyframes(...)), and Box::new(MorphWeightsKeyframes(...)) respectively.
+App #
+Add features to switch NativeActivity and GameActivity usage #
+PR #12095
+App
+GameActivity is now the default activity for Android projects, replacing NativeActivity. cargo-apk has been replaced with cargo-ndk since the former is not compatible with GameActivity.
+
+Before:
+
+rustup target add aarch64-linux-android armv7-linux-androideabi
+cargo install cargo-apk
+After:
+
+rustup target add aarch64-linux-android
+cargo install cargo-ndk
+Shared object files must be now built for the target architecture before launching package builds with the Gradle wrapper.
+
+Before:
+
+cargo apk build --package bevy_mobile_example
+After:
+
+cargo ndk -t arm64-v8a -o android_example/app/src/main/jniLibs build --package bevy_mobile_example
+./android_example/gradlew build
+(replace target and project name as required). Note that build output paths have changed. APK builds can be found under app/build/outputs/apk).
+
+Android Studio may also be used.
+
+Bevy may require the libc++_shared.so library to run on Android. This can be manually obtained from NDK source, or NDK describes a build.rs approach. A suggested solution is also presented in the Bevy mobile example.
+
+Applications that still require NativeActivity should:
+
+disable default features in Cargo.toml
+re-enable all default features except android-game-activity
+enable the android-native-activity feature
+Allow ordering variable timesteps around fixed timesteps #
+PR #14881
+App
+run_fixed_main_schedule is no longer public. If you used to order against it, use the new dedicated RunFixedMainLoopSystem system set instead. You can replace your usage of run_fixed_main_schedule one for one by RunFixedMainLoopSystem::FixedMainLoop, but it is now more idiomatic to place your systems in either RunFixedMainLoopSystem::BeforeFixedMainLoop or RunFixedMainLoopSystem::AfterFixedMainLoop
+
+Old:
+
+app.add_systems(
+    RunFixedMainLoop,
+    some_system.before(run_fixed_main_schedule)
+);
+New:
+
+app.add_systems(
+    RunFixedMainLoop,
+    some_system.in_set(RunFixedMainLoopSystem::BeforeFixedMainLoop)
+);
+Remove deprecated bevy_dynamic_plugin #
+PR #14534
+App
+Dynamic plugins were deprecated in 0.14 for being unsound, and they have now been fully removed. Please consider using the alternatives listed in the bevy_dynamic_plugin crate documentation, or worst-case scenario you may copy the code from 0.14.
+
+Remove need for EventLoopProxy to be NonSend #
+PR #14198
+App
+EventLoopProxy has been renamed to EventLoopProxyWrapper and is now Send, making it an ordinary resource.
+
+Before:
+
+event_loop_system(event_loop: NonSend<EventLoopProxy<MyEvent>>) {
+    event_loop.send_event(MyEvent);
+}
+After:
+
+event_loop_system(event_loop: Res<EventLoopProxy<MyEvent>>) {
+    event_loop.send_event(MyEvent);
+}
+Remove second generic from .add_before, .add_after #
+PR #14285
+App
+Removed second generic from PluginGroupBuilder methods: add_before and add_after.
+
+// Before:
+DefaultPlugins
+    .build()
+    .add_before::<WindowPlugin, _>(FooPlugin)
+    .add_after::<WindowPlugin, _>(BarPlugin)
+
+// After:
+DefaultPlugins
+    .build()
+    .add_before::<WindowPlugin>(FooPlugin)
+    .add_after::<WindowPlugin>(BarPlugin)
+Handle Ctrl+C in the terminal properly #
+PR #14001
+App
+Windowing
+If you are overriding the Ctrl+C handler then you should call TerminalCtrlCHandlerPlugin::gracefully_exit from your handler. It will tell the app to exit.
+
+Assets #
+AssetServer LoadState API consistency #
+PR #15237
+Assets
+RecursiveDependencyLoadState::Failed now stores error information about the first encountered error, rather than being a unit struct.
+
+Cleanup unneeded lifetimes in bevy_asset #
+PR #15546
+Assets
+The traits AssetLoader, AssetSaver and Process traits from bevy_asset now use elided lifetimes. If you implement these then remove the named lifetime.
+
+Generalized Into<AssetSourceId> and Into<AssetPath> Implementations over Lifetime #
+PR #10823
+Assets
+In areas where these implementations where being used, you can now add from_static in order to get the original specialised implementation which avoids creating an Arc internally.
+
+// Before
+let asset_path = AssetPath::from("my/path/to/an/asset.ext");
+
+// After
+let asset_path = AssetPath::from_static("my/path/to/an/asset.ext");
+To be clear, this is only required if you wish to maintain the performance benefit that came with the specialisation. Existing code is not broken by this change.
+
+Improve error handling for AssetServer::add_async #
+PR #13745
+Assets
+AssetServer::add_async can now return a custom error type in its future. To return to the previous behavior, pass in an E generic of AssetLoadError.
+
+To support these changes, AssetLoadError now has an additional arm that will need to be exhaustively matched against.
+
+Remove incorrect equality comparisons for asset load error types #
+PR #15890
+Assets
+The types bevy_asset::AssetLoadError and bevy_asset::LoadState no longer support equality comparisons. If you need to check for an asset’s load state, consider checking for a specific variant using LoadState::is_loaded or the matches! macro. Similarly, consider using the matches! macro to check for specific variants of the AssetLoadError type if you need to inspect the value of an asset load error in your code.
+
+DependencyLoadState and RecursiveDependencyLoadState are not released yet, so no migration needed,
+
+Replace AsyncSeek trait by AsyncSeekForward for Reader to address #12880 #
+PR #14194
+Assets
+Replace all instances of AsyncSeek with AsyncSeekForward in your asset reader implementations.
+
+bevy_asset: Improve NestedLoader API #
+PR #15509
+Assets
+Code which uses bevy_asset’s LoadContext::loader / NestedLoader will see some naming changes:
+
+untyped is replaced by with_unknown_type
+with_asset_type is replaced by with_static_type
+with_asset_type_id is replaced by with_dynamic_type
+direct is replaced by immediate (the opposite of “immediate” is “deferred”)
+Deprecate LoadAndSave Asset Processor #
+PR #15090
+Assets
+Replace LoadAndSave<L, S> with LoadTransformAndSave<L, IdentityAssetTransformer<<L as AssetLoader>::Asset>, S>
+Replace LoadAndSaveSettings<L, S> with LoadTransformAndSaveSettings<L, (), S>
+AssetReader::read now returns an opaque type #
+PR #14082
+Assets
+The trait method bevy_asset::io::AssetReader::read (and read_meta) now return an opaque type instead of a boxed trait object. Implementors of these methods should change the type signatures appropriately:
+
+impl AssetReader for MyReader {
+    // Before
+    async fn read<'a>(&'a self, path: &'a Path) -> Result<Box<Reader<'a>>, AssetReaderError> {
+        let reader = // construct a reader
+        Box::new(reader) as Box<Reader<'a>>
+    }
+
+    // After
+    async fn read<'a>(&'a self, path: &'a Path) -> Result<impl Reader + 'a, AssetReaderError> {
+        // create a reader
+    }
+}
+bevy::asset::io::Reader is now a trait, rather than a type alias for a trait object. Implementors of AssetLoader::load will need to adjust the method signature accordingly:
+
+impl AssetLoader for MyLoader {
+    async fn load<'a>(
+        &'a self,
+        // Before:
+        reader: &'a mut bevy::asset::io::Reader,
+        // After:
+        reader: &'a mut dyn bevy::asset::io::Reader,
+        _: &'a Self::Settings,
+        load_context: &'a mut LoadContext<'_>,
+    ) -> Result<Self::Asset, Self::Error> {
+}
+Additionally, implementors of AssetReader that return a type implementing futures_io::AsyncRead and AsyncSeek might need to explicitly implement bevy::asset::io::Reader for that type.
+
+impl bevy::asset::io::Reader for MyAsyncReadAndSeek {}
+Make gLTF node children Handle instead of objects #
+PR #13707
+Assets
+Rendering
+If accessing children, use Assets<GltfNode> resource to get the actual child object.
+
+Before
+
+fn gltf_print_first_node_children_system(gltf_component_query: Query<Handle<Gltf>>, gltf_assets: Res<Assets<Gltf>>, gltf_nodes: Res<Assets<GltfNode>>) {
+    for gltf_handle in gltf_component_query.iter() {
+        let gltf_root = gltf_assets.get(gltf_handle).unwrap();
+        let first_node_handle = gltf_root.nodes.get(0).unwrap();
+        let first_node = gltf_nodes.get(first_node_handle).unwrap();
+        let first_child = first_node.children.get(0).unwrap();
+        println!("First nodes child node name is {:?)", first_child.name);
+    }
+}
+After
+
+fn gltf_print_first_node_children_system(gltf_component_query: Query<Handle<Gltf>>, gltf_assets: Res<Assets<Gltf>>, gltf_nodes: Res<Assets<GltfNode>>) {
+    for gltf_handle in gltf_component_query.iter() {
+        let gltf_root = gltf_assets.get(gltf_handle).unwrap();
+        let first_node_handle = gltf_root.nodes.get(0).unwrap();
+        let first_node = gltf_nodes.get(first_node_handle).unwrap();
+        let first_child_handle = first_node.children.get(0).unwrap();
+        let first_child = gltf_nodes.get(first_child_handle).unwrap();
+        println!("First nodes child node name is {:?)", first_child.name);
+    }
+}
+Split TextureAtlasSources out of TextureAtlasLayout and make TextureAtlasLayout serializable #
+PR #15344
+Assets
+Rendering
+TextureAtlasBuilder no longer stores a mapping back to the original images in TextureAtlasLayout; that functionality has been added to a new struct, TextureAtlasSources, instead. This also means that the signature for TextureAtlasBuilder::finish has changed, meaning that calls of the form:
+
+let (atlas_layout, image) = builder.build()?;
+Will now change to the form:
+
+let (atlas_layout, atlas_sources, image) = builder.build()?;
+And instead of performing a reverse-lookup from the layout, like so:
+
+let atlas_layout_handle = texture_atlases.add(atlas_layout.clone());
+let index = atlas_layout.get_texture_index(&my_handle);
+let handle = TextureAtlas {
+    layout: atlas_layout_handle,
+    index,
+};
+You can perform the lookup from the sources instead:
+
+let atlas_layout = texture_atlases.add(atlas_layout);
+let index = atlas_sources.get_texture_index(&my_handle);
+let handle = TextureAtlas {
+    layout: atlas_layout,
+    index,
+};
+Additionally, TextureAtlasSources also has a convenience method, handle, which directly combines the index and an existing TextureAtlasLayout handle into a new TextureAtlas:
+
+let atlas_layout = texture_atlases.add(atlas_layout);
+let handle = atlas_sources.handle(atlas_layout, &my_handle);
+Export glTF skins as a Gltf struct #
+PR #14343
+Assets
+Scenes
+Change GltfAssetLabel::Skin(..) to GltfAssetLabel::InverseBindMatrices(..).
+Replace bevy_utils::CowArc with atomicow #
+PR #14977
+Assets
+Utils
+bevy_utils::CowArc has moved to a new crate called atomicow.
+
+Audio #
+Migrate audio to required components #
+PR #15573
+Audio
+ECS
+Replace all insertions of AudioSourceBundle, AudioBundle, and PitchBundle with the AudioPlayer component. The other components required by it will now be inserted automatically.
+
+In cases where the generics cannot be inferred, you may need to specify them explicitly. For example:
+
+commands.spawn(AudioPlayer::<AudioSource>(asset_server.load("sounds/sick_beats.ogg")));
+Build-System #
+Use en-us locale for typos #
+PR #16037
+Build-System
+Cross-Cutting
+The following methods or fields have been renamed from *dependants* to *dependents*.
+
+ProcessorAssetInfo::dependants
+ProcessorAssetInfos::add_dependant
+ProcessorAssetInfos::non_existent_dependants
+AssetInfo::dependants_waiting_on_load
+AssetInfo::dependants_waiting_on_recursive_dep_load
+AssetInfos::loader_dependants
+AssetInfos::remove_dependants_and_labels
+Color #
+Adds back in way to convert color to u8 array, implemented for the two RGB color types, also renames Color::linear to Color::to_linear. #
+PR #13759
+Color
+Color::linear has been renamed to Color::to_linear for consistency.
+
+Update Grid Gizmo to use Color #
+PR #14886
+Color
+Gizmos
+This shouldn’t be adding anything that isn’t already in a migration guide? I assume as it uses impl Into<...> in the public interfaces that any users of these APIs shouldn’t have to make any code changes.
+
+Core #
+Rename bevy_core::name::DebugName to bevy_core::name::NameOrEntity #
+PR #14211
+Core
+Editor
+Rename usages of bevy_core::name::DebugName to bevy_core::name::NameOrEntity
+Cross-Cutting #
+Remove the Component trait implementation from Handle #
+PR #15796
+Cross-Cutting
+Handle can no longer be used as a Component. All existing Bevy types using this pattern have been wrapped in their own semantically meaningful type. You should do the same for any custom Handle components your project needs.
+
+The Handle<MeshletMesh> component is now MeshletMesh3d.
+
+The WithMeshletMesh type alias has been removed. Use With<MeshletMesh3d> instead.
+
+Fix floating point math #
+PR #15239
+Cross-Cutting
+Math
+Not a breaking change
+Projects should use bevy math where applicable
+Don't reëxport bevy_image from bevy_render #
+PR #16163
+Cross-Cutting
+Rendering
+Use bevy_image instead of bevy_render::texture items.
+
+Add custom cursors #
+PR #14284
+Cross-Cutting
+UI
+Windowing
+CursorIcon is no longer a field in Window, but a separate component can be inserted to a window entity. It has been changed to an enum that can hold custom images in addition to system icons.
+Cursor is renamed to CursorOptions and cursor field of Window is renamed to cursor_options
+CursorIcon is renamed to SystemCursorIcon
+Diagnostics #
+Don't ignore draw errors #
+PR #13240
+Diagnostics
+Rendering
+If you were using RenderCommandResult::Failure to just ignore an error and retry later, use RenderCommandResult::Skip instead.
+
+This wasn’t intentional, but this PR should also help with https://github.com/bevyengine/bevy/issues/12660 since we can turn a few unwraps into error messages now.
+
+ECS #
+Make World::flush_commands private #
+PR #15540
+PR #15553
+ECS
+World::flush_commands is now private. Use World::flush instead.
+
+Add FilteredAccess::empty and simplify the implementation of update_component_access for AnyOf/Or #
+PR #14352
+ECS
+The behaviour of AnyOf<()> and Or<()> has been changed to match no archetypes rather than all archetypes to naturally match the corresponding logical operation. Consider replacing them with () instead.
+Add mappings to EntityMapper #
+PR #13727
+ECS
+If you are implementing EntityMapper yourself, you can use the below as a stub implementation:
+fn mappings(&self) -> impl Iterator<Item = (Entity, Entity)> {
+    unimplemented!()
+}
+If you were using EntityMapper as a trait object (dyn EntityMapper), instead use dyn DynEntityMapper and its associated methods.
+Add query reborrowing #
+PR #14690
+ECS
+WorldQuery now has an additional shrink_fetch method you have to implement if you were implementing WorldQuery manually.
+Allow World::entity family of functions to take multiple entities and get multiple references back #
+PR #15614
+ECS
+World::get_entity now returns Result<_, Entity> instead of Option<_>.
+
+Use world.get_entity(..).ok() to return to the previous behavior.
+World::get_entity_mut and DeferredWorld::get_entity_mut now return Result<_, EntityFetchError> instead of Option<_>.
+
+Use world.get_entity_mut(..).ok() to return to the previous behavior.
+Type inference for World::entity, World::entity_mut, World::get_entity, World::get_entity_mut, DeferredWorld::entity_mut, and DeferredWorld::get_entity_mut has changed, and might now require the input argument’s type to be explicitly written when inside closures.
+
+The following functions have been deprecated, and should be replaced as such:
+
+World::many_entities -> World::entity::<[Entity; N]>
+
+World::many_entities_mut -> World::entity_mut::<[Entity; N]>
+
+World::get_many_entities -> World::get_entity::<[Entity; N]>
+
+World::get_many_entities_dynamic -> World::get_entity::<&[Entity]>
+
+World::get_many_entities_mut -> World::get_entity_mut::<[Entity; N]>
+
+The equivalent return type has changed from Result<_, QueryEntityError> to Result<_, EntityFetchError>
+World::get_many_entities_dynamic_mut -> World::get_entity_mut::<&[Entity]>
+
+The equivalent return type has changed from Result<_, QueryEntityError> to Result<_, EntityFetchError>
+World::get_many_entities_from_set_mut -> World::get_entity_mut::<&EntityHashSet>
+
+The equivalent return type has changed from Result<Vec<EntityMut>, QueryEntityError> to Result<EntityHashMap<EntityMut>, EntityFetchError>. If necessary, you can still convert the EntityHashMap into a Vec.
+Change World::inspect_entity to return an Iterator instead of Vec #
+PR #13934
+ECS
+World::inspect_entity now returns an Iterator instead of a Vec. If you need a Vec, immediately collect the iterator: world.inspect_entity(entity).collect<Vec<_>>()
+Created an EventMutator for when you want to mutate an event before reading #
+PR #13818
+ECS
+Users currently using ManualEventReader should use EventCursor instead. ManualEventReader will be removed in Bevy 0.16. Additionally, Events::get_reader has been replaced by Events::get_cursor.
+
+Users currently directly accessing the Events resource for mutation should move to EventMutator if possible.
+
+Deprecate Events::oldest_id #
+PR #15658
+ECS
+Change usages of Events::oldest_id to Events::oldest_event_count
+If Events::oldest_id was used to get the actual oldest EventId::id, note that the deprecated method never reliably did that in the first place as the buffers may contain no id currently.
+Deprecate get_or_spawn #
+PR #15652
+ECS
+If you are given an Entity and you want to do something with it, use Commands.entity(...) or World.entity(...). If instead you want to spawn something use Commands.spawn(...) or World.spawn(...). If you are not sure if an entity exists, you can always use get_entity and match on the Option<...> that is returned.
+
+Enable EntityRef::get_by_id and friends to take multiple ids and get multiple pointers back #
+PR #15593
+ECS
+The following functions now return an Result<_, EntityComponentError> instead of a Option<_>: EntityRef::get_by_id, EntityMut::get_by_id, EntityMut::into_borrow_by_id, EntityMut::get_mut_by_id, EntityMut::into_mut_by_id, EntityWorldMut::get_by_id, EntityWorldMut::into_borrow_by_id, EntityWorldMut::get_mut_by_id, EntityWorldMut::into_mut_by_id
+EntityRef/Mut get_components (immutable variants only) #
+PR #15089
+ECS
+Renamed FilteredEntityRef::components to FilteredEntityRef::accessed_components and FilteredEntityMut::components to FilteredEntityMut::accessed_components.
+Fix soudness issue with Conflicts involving read_all and write_all #
+PR #14579
+ECS
+The get_conflicts method of Access now returns an AccessConflict enum instead of simply a Vec of ComponentIds that are causing the access conflict. This can be useful in cases where there are no particular ComponentIds conflicting, but instead all of them are; for example fn system(q1: Query<EntityMut>, q2: Query<EntityRef>)
+
+Follow up to cached run_system #
+PR #15410
+ECS
+IntoSystem::pipe and IntoSystem::map now return IntoPipeSystem and IntoAdapterSystem instead of PipeSystem and AdapterSystem. Most notably these types don’t implement System but rather only IntoSystem.
+List components for QueryEntityError::QueryDoesNotMatch #
+PR #15435
+ECS
+QueryEntityError now has a lifetime. Convert it to a custom error if you need to store it.
+Make QueryFilter an unsafe trait #
+PR #14790
+ECS
+QueryFilter is now an unsafe trait. If you were manually implementing it, you will need to verify that the WorldQuery implementation is read-only and then add the unsafe keyword to the impl.
+
+Make QueryState::transmute&co validate the world of the &Components used #
+PR #14631
+ECS
+QueryState::transmute, QueryState::transmute_filtered, QueryState::join and QueryState::join_filtered now take a impl Into<UnsafeWorldCell> instead of a &Components
+Re-name and Extend Run Conditions API #
+PR #13784
+ECS
+The and_then run condition method has been replaced with the and run condition method.
+The or_else run condition method has been replaced with the or run condition method.
+Remove redundant information and optimize dynamic allocations in Table #
+PR #12929
+ECS
+Table now uses ThinColumn instead of Column. That means that methods that previously returned Column, will now return ThinColumn instead.
+
+ThinColumn has a much more limited and low-level API, but you can still achieve the same things in ThinColumn as you did in Column. For example, instead of calling Column::get_added_tick, you’d call ThinColumn::get_added_ticks_slice and index it to get the specific added tick.
+
+Removed Type Parameters from Observer #
+PR #15151
+ECS
+If you filtered for observers using Observer<A, B>, instead filter for an Observer.
+
+Rename Add to Queue for methods with deferred semantics #
+PR #15234
+ECS
+Commands::add and Commands::push have been replaced with Commands::queue.
+ChildBuilder::add_command has been renamed to ChildBuilder::queue_command.
+Rename App/World::observe to add_observer, EntityWorldMut::observe_entity to observe. #
+PR #15754
+ECS
+Various observer methods have been renamed for clarity.
+
+App::observe -> App::add_observer
+World::observe -> World::add_observer
+Commands::observe -> Commands::add_observer
+EntityWorldMut::observe_entity -> EntityWorldMut::observe
+Rename Commands::register_one_shot_system -> register_system #
+PR #14910
+ECS
+Commands::register_one_shot_system has been renamed to register_system.
+
+Rename init_component & friends #
+PR #15454
+ECS
+World::init_component has been renamed to register_component.
+World::init_component_with_descriptor has been renamed to register_component_with_descriptor.
+World::init_bundle has been renamed to register_bundle.
+Components::init_component has been renamed to register_component.
+Components::init_component_with_descriptor has been renamed to register_component_with_descriptor.
+Components::init_resource has been renamed to register_resource.
+Components::init_non_send had been renamed to register_non_send.
+Rename observe to observe_entity on EntityWorldMut #
+PR #15616
+ECS
+The observe() method on entities has been renamed to observe_entity() to prevent confusion about what is being observed in some cases.
+
+Rename push children to add children #
+PR #15196
+ECS
+Some commands and methods for adding children to an entity were renamed for consistency.
+
+0.14	0.15
+EntityCommands::push_children	add_children
+PushChild	AddChild
+PushChildren	AddChildren
+Require &mut self for World::increment_change_tick #
+PR #14459
+ECS
+The method World::increment_change_tick now requires &mut self instead of &self. If you need to call this method but do not have mutable access to the world, consider using world.as_unsafe_world_cell_readonly().increment_change_tick(), which does the same thing, but is less efficient than the method on World due to requiring atomic synchronization.
+
+fn my_system(world: &World) {
+    // Before
+    world.increment_change_tick();
+
+    // After
+    world.as_unsafe_world_cell_readonly().increment_change_tick();
+}
+Simplify run conditions #
+PR #14441
+ECS
+Some run conditions have been simplified.
+
+// Before:
+app.add_systems(Update, (
+    system_0.run_if(run_once()),
+    system_1.run_if(resource_changed_or_removed::<T>()),
+    system_2.run_if(resource_removed::<T>()),
+    system_3.run_if(on_event::<T>()),
+    system_4.run_if(any_component_removed::<T>()),
+));
+
+// After:
+app.add_systems(Update, (
+    system_0.run_if(run_once),
+    system_1.run_if(resource_changed_or_removed::<T>),
+    system_2.run_if(resource_removed::<T>),
+    system_3.run_if(on_event::<T>),
+    system_4.run_if(any_component_removed::<T>),
+));
+Support more kinds of system params in buildable systems. #
+PR #14050
+ECS
+The API for SystemBuilder has changed. Instead of constructing a builder with a world and then adding params, you first create a tuple of param builders and then supply the world.
+
+// Before
+let system = SystemBuilder::<()>::new(&mut world)
+    .local::<u64>()
+    .builder::<Local<u64>>(|x| *x = 10)
+    .builder::<Query<&A>>(|builder| { builder.with::<B>(); })
+    .build(system);
+
+// After
+let system = (
+    ParamBuilder,
+    LocalBuilder(10),
+    QueryParamBuilder::new(|builder| { builder.with::<B>(); }),
+)
+    .build_state(&mut world)
+    .build_system(system);
+Support systems that take references as input #
+PR #15184
+ECS
+All current explicit usages of the following types must be changed in the way specified:
+
+SystemId<I, O> to SystemId<In<I>, O>
+System<In = T> to System<In = In<T>>
+IntoSystem<I, O, M> to IntoSystem<In<I>, O, M>
+Condition<M, T> to Condition<M, In<T>>
+In<Trigger<E, B>> is no longer a valid input parameter type. Use Trigger<E, B> directly, instead.
+
+System param validation for observers, system registry and run once #
+PR #15526
+ECS
+RunSystemOnce::run_system_once and RunSystemOnce::run_system_once_with now return a Result<Out> instead of just Out
+Track source location in change detection #
+PR #14034
+ECS
+Added changed_by field to many internal ECS functions used with change detection when the track_change_detection feature flag is enabled. Use Location::caller() to provide the source of the function call.
+Update trigger_observers to operate over slices of data #
+PR #14354
+ECS
+The trigger_observers method now operates on &[ComponentId] rather than impl Iterator<Item=ComponentId>.
+
+Try replacing bundle_info.iter_components() with bundle_info.components() or collect the iterator of component ids into a Vec.
+
+IntoSystemConfigs::chain_ignore_deferred's return type fix #
+PR #13919
+ECS
+IntoSystemConfigs::chain_ignore_deferred now correctly returns a SystemSetConfig.
+
+bevy_ecs: Special-case Entity::PLACEHOLDER formatting #
+PR #15839
+ECS
+The Debug and Display impls for Entity now return PLACEHOLDER for the Entity::PLACEHOLDER constant. If you had any code relying on these values, you may need to account for this change.
+
+change return type of World::resource_ref to Ref #
+PR #15263
+ECS
+Previously World::get_resource_ref::<T> and World::resource_ref::<T> would return a Res<T> which was inconsistent with the rest of the World API (notably resource_scope). This has been fixed and the methods now return Ref<T>.
+
+This means it is no longer possible to get Res<T> from World. If you were relying on this, you should try using Ref<T> instead since it has the same functionality.
+
+Before
+
+let my_resource: Res<MyResource> = world.resource_ref();
+function_taking_resource(my_resource);
+
+fn function_taking_resource(resource: Res<MyResource>) { /* ... */ }
+After
+
+let my_resource: Ref<MyResource> = world.resource_ref();
+function_taking_resource(my_resource);
+
+fn function_taking_resource(resource: Ref<MyResource>) { /* ... */ }
+Minimal Bubbling Observers #
+PR #13991
+ECS
+Hierarchy
+Picking
+Manual implementations of Event should add associated type Traverse = TraverseNone and associated constant AUTO_PROPAGATE = false;
+Trigger::new has new field propagation: &mut Propagation which provides the bubbling state.
+ObserverRunner now takes the same &mut Propagation as a final parameter.
+Make ComponentTicks field public #
+PR #16269
+ECS
+Networking
+Instead of using ComponentTicks::last_changed_tick and ComponentTicks::added_tick methods, access fields directly.
+Change ReflectMapEntities to operate on components before insertion #
+PR #15422
+ECS
+Networking
+Scenes
+Consumers of ReflectMapEntities will need to call map_entities on values prior to inserting them into the world.
+Implementors of MapEntities will need to remove the mappings method, which is no longer needed for ReflectMapEntities and has been removed from the trait.
+Bubbling observers traversal should use query data #
+PR #15385
+ECS
+Picking
+Update implementations of Traversal.
+
+Migrate bevy picking #
+PR #15690
+ECS
+Picking
+This API hasn’t shipped yet, so I didn’t bother with a deprecation. However, for any crates tracking main the changes are as follows:
+
+Previous api:
+
+commands.insert(PointerBundle::new(PointerId::Mouse));
+commands.insert(PointerBundle::new(PointerId::Mouse).with_location(location));
+New api:
+
+commands.insert(PointerId::Mouse);
+commands.insert((PointerId::Mouse, PointerLocation::new(location)));
+ReflectBundle::remove improvement #
+PR #16139
+ECS
+Reflection
+If you don’t need the returned value from remove, discard it.
+
+Use crate: disqualified #
+PR #15372
+ECS
+Reflection
+Utils
+Replace references to bevy_utils::ShortName with disqualified::ShortName.
+
+Migrate cameras to required components #
+PR #15641
+ECS
+Rendering
+Camera2dBundle and Camera3dBundle have been deprecated in favor of Camera2d and Camera3d. Inserting them will now also insert the other components required by them automatically.
+
+Migrate fog volumes to required components #
+PR #15568
+ECS
+Rendering
+Replace all insertions of FogVolumeBundle with the Visibility component. The other components required by it will now be inserted automatically.
+
+Migrate meshes and materials to required components #
+PR #15524
+ECS
+Rendering
+Asset handles for meshes and mesh materials must now be wrapped in the Mesh2d and MeshMaterial2d or Mesh3d and MeshMaterial3d components for 2D and 3D respectively. Raw handles as components no longer render meshes.
+
+Additionally, MaterialMesh2dBundle, MaterialMeshBundle, and PbrBundle have been deprecated. Instead, use the mesh and material components directly.
+
+Previously:
+
+commands.spawn(MaterialMesh2dBundle {
+    mesh: meshes.add(Circle::new(100.0)).into(),
+    material: materials.add(Color::srgb(7.5, 0.0, 7.5)),
+    transform: Transform::from_translation(Vec3::new(-200., 0., 0.)),
+    ..default()
+});
+Now:
+
+commands.spawn((
+    Mesh2d(meshes.add(Circle::new(100.0))),
+    MeshMaterial2d(materials.add(Color::srgb(7.5, 0.0, 7.5))),
+    Transform::from_translation(Vec3::new(-200., 0., 0.)),
+));
+If the mesh material is missing, a white default material is now used. Previously, nothing was rendered if the material was missing.
+
+The WithMesh2d and WithMesh3d query filter type aliases have also been removed. Simply use With<Mesh2d> or With<Mesh3d>.
+
+Migrate motion blur, TAA, SSAO, and SSR to required components #
+PR #15572
+ECS
+Rendering
+MotionBlurBundle, TemporalAntiAliasBundle, ScreenSpaceAmbientOcclusionBundle, and ScreenSpaceReflectionsBundle have been deprecated in favor of the MotionBlur, TemporalAntiAliasing, ScreenSpaceAmbientOcclusion, and ScreenSpaceReflections components instead. Inserting them will now also insert the other components required by them automatically.
+
+Migrate reflection probes to required components #
+PR #15737
+ECS
+Rendering
+ReflectionProbeBundle has been deprecated in favor of inserting the LightProbe and EnvironmentMapLight components directly. Inserting them will now automatically insert Transform and Visibility components.
+
+Migrate visibility to required components #
+PR #15474
+ECS
+Rendering
+Replace all insertions of VisibilityBundle with the Visibility component. The other components required by it will now be inserted automatically.
+
+Synchronize removed components with the render world #
+PR #15582
+ECS
+Rendering
+The retained render world notes should be updated to explain this edge case and SyncComponentPlugin
+
+Deprecate SpatialBundle #
+PR #15830
+ECS
+Transform
+SpatialBundle is now deprecated, insert Transform and Visibility instead which will automatically insert all other components that were in the bundle. If you do not specify these values and any other components in your spawn/insert call already requires either of these components you can leave that one out.
+
+before:
+
+commands.spawn(SpatialBundle::default());
+after:
+
+commands.spawn((Transform::default(), Visibility::default());
+Migrate bevy_transform to required components #
+PR #14964
+ECS
+Transform
+Replace all insertions of GlobalTransform and/or TransformBundle with Transform alone.
+
+Gizmos #
+Consistency between Wireframe2d and Wireframe #
+PR #14720
+Gizmos
+Wireframe2dConfig.default_color type is now Color instead of Srgba. Use .into() to convert between them.
+Wireframe2dColor.color type is now Color instead of Srgba. Use .into() to convert between them.
+Fix Gizmos warnings and doc errors when a subset of features are selected #
+PR #14887
+Gizmos
+There shouldn’t be any reason to migrate, although if for some reason you use GizmoMeshConfig and bevy_render but not bevy_pbr or bevy_sprite (such that it does nothing), then you will get an error that it no longer exists.
+
+Fix arc_2d Gizmos #
+PR #14731
+Gizmos
+users have to adjust their usages of arc_2d:
+before:
+arc_2d(
+  pos,
+  angle,
+  arc_angle,
+  radius,
+  color
+)
+after:
+arc_2d(
+  // this `+ arc_angle * 0.5` quirk is only if you want to preserve the previous behavior 
+  // with the new API.
+  // feel free to try to fix this though since your current calls to this function most likely
+  // involve some computations to counter-act that quirk in the first place
+  Isometry2d::new(pos, Rot2::radians(angle + arc_angle * 0.5),
+  arc_angle,
+  radius,
+  color
+)
+Improve the gizmo for Plane3d, reusing grid #
+PR #14650
+Gizmos
+The optional builder methods on
+
+
+gizmos.primitive_3d(&Plane3d { }, ...);
+
+changed from
+
+segment_length
+segment_count
+axis_count
+to
+
+cell_count
+spacing
+Making bevy_render an optional dependency for bevy_gizmos #
+PR #14448
+Gizmos
+No user-visible changes needed from the users.
+
+Use Isometry in bevy_gizmos wherever we can #
+PR #14676
+Gizmos
+The gizmos methods function signature changes as follows:
+
+2D
+
+if it took position & rotation_angle before -> Isometry2d::new(position, Rot2::radians(rotation_angle))
+if it just took position before -> Isometry2d::from_translation(position)
+3D
+
+if it took position & rotation before -> Isometry3d::new(position, rotation)
+if it just took position before -> Isometry3d::from_translation(position)
+Use u32 for all resolution/subdivision fields in bevy_gizmos #
+PR #13927
+Gizmos
+All gizmos now take u32 instead of usize for their resolution/subdivision/segment counts
+Switch rotation & translation in grid gizmos #
+PR #14656
+Gizmos
+Math
+Users might have to double check their already existing calls to all the grid methods. It should be more intuitive now though.
+Make TrackedRenderPass::set_vertex_buffer aware of slice size #
+PR #14916
+Gizmos
+Rendering
+TrackedRenderPass::set_vertex_buffer function has been modified to update vertex buffers when the same buffer with the same offset is provided, but its size has changed. Some existing code may rely on the previous behavior, which did not update the vertex buffer in this scenario.
+Hierarchy #
+Only propagate transforms entities with GlobalTransforms. #
+PR #14384
+Hierarchy
+Transform
+To avoid surprising performance pitfalls, Transform / GlobalTransform propagation is no longer performed down through hierarchies where intermediate parent are missing a GlobalTransform. To restore the previous behavior, add GlobalTransform::default to intermediate entities.
+Input #
+Gamepad improvements #
+PR #16222
+Input
+Gamepad fields are now public.
+Instead of using Gamepad delegates like Gamepad::just_pressed, call these methods directly on the fields.
+Implement gamepads as entities #
+PR #12770
+Input
+Gamepad input is no longer accessed using resources, instead they are entities and are accessible using the Gamepad component as long as the gamepad is connected.
+
+Gamepads resource has been deleted, instead of using an internal id to identify gamepads you can use its Entity. Disconnected gamepads will NOT be despawned. Gamepad components that don’t need to preserve their state will be removed i.e. Gamepad component is removed, but GamepadSettings is kept. Reconnected gamepads will try to preserve their Entity id and necessary components will be re-inserted.
+
+GamepadSettings is no longer a resource, instead it is a component attached to the Gamepad entity.
+
+Axis, Axis and ButtonInput methods are accessible via Gamepad component.
+
+fn gamepad_system(
+-   gamepads: Res<Gamepads>,
+-   button_inputs: Res<ButtonInput<GamepadButton>>,
+-   button_axes: Res<Axis<GamepadButton>>,
+-   axes: Res<Axis<GamepadAxis>>,
++   gamepads: Query<&Gamepad>
+) {
+    for gamepad in gamepads.iter() {
+-      if button_inputs.just_pressed(GamepadButton::new(gamepad, GamepadButtonType::South)) {
++      if gamepad.just_pressed(GamepadButton::South) {
+            println!("just pressed South");
+        } 
+         
+-      let right_trigger = button_axes
+-           .get(GamepadButton::new(
+-               gamepad,
+-               GamepadButtonType::RightTrigger2,
+-           ))
+-           .unwrap();
++      let right_trigger = gamepad.get(GamepadButton::RightTrigger2).unwrap();
+        if right_trigger.abs() > 0.01 {
+            info!("RightTrigger2 value is {}", right_trigger);      
+        }
+
+-        let left_stick_x = axes
+-           .get(GamepadAxis::new(gamepad, GamepadAxisType::LeftStickX))
+-           .unwrap();
++       let left_stick_x = gamepad.get(GamepadAxis::LeftStickX).unwrap();
+        if left_stick_x.abs() > 0.01 {
+            info!("LeftStickX value is {}", left_stick_x);        
+        }
+    }
+}
+Remove ReceivedCharacter #
+PR #15126
+Input
+ReceivedCharacter was deprecated in 0.14 due to winit reworking their keyboard system. It has now been fully removed. Switch to using KeyboardInput instead.
+
+// 0.14
+fn listen_characters(events: EventReader<ReceivedCharacter>) {
+    for event in events.read() {
+        info!("{}", event.char);
+    }
+}
+
+// 0.15
+fn listen_characters(events: EventReader<KeyboardInput>) {
+    for event in events.read() {
+        // Only check for characters when the key is pressed.
+        if !event.state.is_pressed() {
+            continue;
+        }
+
+        // Note that some keys such as `Space` and `Tab` won't be detected as a character.
+        // Instead, check for them as separate enum variants.
+        match &event.logical_key {
+            Key::Character(character) => {
+                info!("{} pressed.", character);
+            },
+            Key::Space => {
+                info!("Space pressed.");
+            },
+            _ => {},
+        }
+    }
+}
+Use Name component for gamepad #
+PR #16233
+Input
+GamepadInfo no longer exists:
+Name now accessible via Name component.
+Other information available on Gamepad component directly.
+GamepadConnection::Connected now stores all info fields directly.
+Picking event ordering #
+PR #14862
+Input
+Picking
+Windowing
+For users switching from bevy_mod_picking to bevy_picking:
+
+Instead of adding an On<T> component, use .observe(|trigger: Trigger<T>|). You may now apply multiple handlers to the same entity using this command.
+Note that you need to add the non-default MeshPickingPlugin if you're using picking on meshes.
+Pointer interaction events now have semi-deterministic ordering which (more or less) aligns with the order of the raw input stream. Consult the docs on bevy_picking::event::pointer_events for current information. You may need to adjust your event handling logic accordingly.
+PointerCancel has been replaced with Pointer<Canceled>, which now has the semantics of an OS touch pointer cancel event.
+InputMove and InputPress have been merged into PointerInput. The use remains exactly the same.
+Picking interaction events are now only accessible through observers, and no EventReader. This functionality may be re-implemented later.
+For users of bevy_winit:
+
+The event bevy_winit::WinitEvent has moved to bevy_window::WindowEvent. If this was the only thing you depended on bevy_winit for, you should switch your dependency to bevy_window.
+bevy_window now depends on bevy_input. The dependencies of bevy_input are a subset of the existing dependencies for bevy_window so this should be non-breaking.
+Math #
+Added new method to Cone 3D primitive #
+PR #14325
+Math
+Addition of new method to the 3D primitive Cone struct.
+Basic integration of cubic spline curves with the Curve API #
+PR #15469
+Math
+The RationalCurve::domain method has been renamed to RationalCurve::length. Calling .domain() on a RationalCurve now returns its entire domain as an Interval.
+
+Disallow empty cubic and rational curves #
+PR #14382
+Math
+The to_curve method on Bevy’s cubic splines is now fallible (returning a Result), meaning that any existing calls will need to be updated by handling the possibility of an error variant.
+
+Similarly, any custom implementation of CubicGenerator or RationalGenerator will need to be amended to include an Error type and be made fallible itself.
+
+Finally, the fields of CubicCurve and RationalCurve are now private, so any direct constructions of these structs from segments will need to be replaced with the new CubicCurve::from_segments and RationalCurve::from_segments methods.
+
+Refactor Bounded2d/Bounded3d to use isometries #
+PR #14485
+Math
+The Bounded2d and Bounded3d traits now take Isometry2d and Isometry3d parameters (respectively) instead of separate translation and rotation arguments. Existing calls to aabb_2d, bounding_circle, aabb_3d, and bounding_sphere will have to be changed to use isometries instead. A straightforward conversion is to refactor just by calling Isometry2d/3d::new, as follows:
+
+// Old:
+let aabb = my_shape.aabb_2d(my_translation, my_rotation);
+
+// New:
+let aabb = my_shape.aabb_2d(Isometry2d::new(my_translation, my_rotation));
+However, if the old translation and rotation are 3d translation/rotations originating from a Transform or GlobalTransform, then to_isometry may be used instead. For example:
+
+// Old:
+let bounding_sphere = my_shape.bounding_sphere(shape_transform.translation, shape_transform.rotation);
+
+// New:
+let bounding_sphere = my_shape.bounding_sphere(shape_transform.to_isometry());
+This discussion also applies to the from_point_cloud construction method of Aabb2d/BoundingCircle/Aabb3d/BoundingSphere, which has similarly been altered to use isometries.
+
+Rename Rot2::angle_between to Rot2::angle_to #
+PR #16327
+Math
+Rot2::angle_between has been deprecated, use Rot2::angle_to instead, the semantics of Rot2::angle_between will change in the future.
+
+Use Dir2/Dir3 instead of Vec2/Vec3 for Ray2d::new/Ray3d::new #
+PR #15735
+Math
+Ray2d::new and Ray3d::new now take a Dir2 and Dir3 instead of Vec2 and Vec3 respectively for the ray direction.
+
+Use a well defined type for sides in RegularPolygon #
+PR #13837
+Math
+RegularPolygon now uses u32 instead of usize for the number of sides
+bevy_reflect: Update EulerRot to match glam 0.29 #
+PR #15402
+Math
+Reflection
+The reflection implementation for EulerRot has been updated to align with glam 0.29. Please update any reflection-based usages accordingly.
+
+Use u32 for resolution/subdivision in primitive meshing #
+PR #13930
+Math
+Rendering
+All primitive mesh builders now take u32 instead of usize for their resolution/subdivision/segment counts
+Picking #
+Add flags to SpritePlugin and UiPlugin to allow disabling their picking backend (without needing to disable features). #
+PR #16473
+Picking
+UiPlugin now contains an extra add_picking field if bevy_ui_picking_backend is enabled.
+SpritePlugin is no longer a unit struct, and has one field if bevy_sprite_picking_backend is enabled (otherwise no fields).
+rename Drop to bevy::picking::events::DragDrop to unclash std::ops:Drop #
+PR #14926
+Picking
+Rename Drop to DragDrop
+bevy::picking::events::Drop is now bevy::picking::events::DragDrop
+Reflection #
+Dedicated Reflect implementation for Set-like things #
+PR #13014
+Reflection
+The new Set variants on the enums listed in the change section should probably be considered by people working with this level of the lib
+Help wanted!
+
+I’m not sure if this change is able to break code. From my understanding it shouldn’t since we just add functionality but I’m not sure yet if theres anything missing from my impl that would be normally provided by impl_reflect_value!
+
+Implement FromIterator/IntoIterator for dynamic types #
+PR #14250
+Reflection
+Change DynamicArray::from_vec to DynamicArray::from_iter
+Make drain take a mutable borrow instead of Box<Self> for reflected Map, List, and Set. #
+PR #15406
+Reflection
+reflect::Map, reflect::List, and reflect::Set all now take a &mut self instead of a Box<Self>. Callers of these traits should add &mut before their boxes, and implementers of these traits should update to match.
+Remove Return::Unit variant #
+PR #15484
+Reflection
+Removed the Return::Unit variant; use Return::unit() instead.
+Serialize and deserialize tuple struct with one field as newtype struct #
+PR #15628
+Reflection
+Reflection now will serialize and deserialize tuple struct with single field as newtype struct. Consider this code.
+#[derive(Reflect, Serialize)]
+struct Test(usize);
+let reflect = Test(3);
+let serializer = TypedReflectSerializer::new(reflect.as_partial_reflect(), &registry);
+return serde_json::to_string(&serializer)
+Old behavior will return ["3"]. New behavior will return "3". If you were relying on old behavior you need to update your logic. Especially with serde_json. ron doesn’t affect from this.
+
+bevy_reflect: Add DynamicTyped trait #
+PR #15108
+Reflection
+Reflect now has a supertrait of DynamicTyped. If you were manually implementing Reflect and did not implement Typed, you will now need to do so.
+
+bevy_reflect: Add ReflectDeserializerProcessor #
+PR #15482
+Reflection
+(Since I added P = (), I don’t think this is actually a breaking change anymore, but I’ll leave this in)
+
+bevy_reflect’s ReflectDeserializer and TypedReflectDeserializer now take a ReflectDeserializerProcessor as the type parameter P, which allows you to customize deserialization for specific types when they are found. However, the rest of the API surface (new) remains the same.
+
+Original implementation
+bevy_reflect: Add Type type #
+PR #14838
+Reflection
+Certain type info structs now only return their item types as Type instead of exposing direct methods on them.
+
+The following methods have been removed:
+
+ArrayInfo::item_type_path_table
+ArrayInfo::item_type_id
+ArrayInfo::item_is
+ListInfo::item_type_path_table
+ListInfo::item_type_id
+ListInfo::item_is
+SetInfo::value_type_path_table
+SetInfo::value_type_id
+SetInfo::value_is
+MapInfo::key_type_path_table
+MapInfo::key_type_id
+MapInfo::key_is
+MapInfo::value_type_path_table
+MapInfo::value_type_id
+MapInfo::value_is
+Instead, access the Type directly using one of the new methods:
+
+ArrayInfo::item_ty
+ListInfo::item_ty
+SetInfo::value_ty
+MapInfo::key_ty
+MapInfo::value_ty
+For example:
+
+// BEFORE
+let type_id = array_info.item_type_id();
+
+// AFTER
+let type_id = array_info.item_ty().id();
+bevy_reflect: Nested TypeInfo getters #
+PR #13321
+Reflection
+All active fields for reflected types (including lists, maps, tuples, etc.), must implement Typed. For the majority of users this won’t have any visible impact.
+
+However, users implementing Reflect manually may need to update their types to implement Typed if they weren’t already.
+
+Additionally, custom dynamic types will need to implement the new hidden MaybeTyped trait.
+
+bevy_reflect: Refactor serde module #
+PR #15107
+Reflection
+The fields on ReflectSerializer and TypedReflectSerializer are now private. To instantiate, the corresponding constructor must be used:
+
+// BEFORE
+let serializer = ReflectSerializer {
+    value: &my_value,
+    registry: &type_registry,
+};
+
+// AFTER
+let serializer = ReflectSerializer::new(&my_value, &type_registry);
+Additionally, the following types are no longer public:
+
+ArraySerializer
+EnumSerializer
+ListSerializer
+MapSerializer
+ReflectValueSerializer (fully removed)
+StructSerializer
+TupleSerializer
+TupleStructSerializer
+As well as the following traits:
+
+DeserializeValue (fully removed)
+bevy_reflect: Replace "value" terminology with "opaque" #
+PR #15240
+Reflection
+The reflection concept of “value type” has been replaced with a clearer “opaque type”. The following renames have been made to account for this:
+
+ReflectKind::Value → ReflectKind::Opaque
+ReflectRef::Value → ReflectRef::Opaque
+ReflectMut::Value → ReflectMut::Opaque
+ReflectOwned::Value → ReflectOwned::Opaque
+TypeInfo::Value → TypeInfo::Opaque
+ValueInfo → OpaqueInfo
+impl_reflect_value! → impl_reflect_opaque!
+impl_from_reflect_value! → impl_from_reflect_opaque!
+Additionally, declaring your own opaque types no longer uses #[reflect_value]. This attribute has been replaced by #[reflect(opaque)]:
+
+// BEFORE
+#[derive(Reflect)]
+#[reflect_value(Default)]
+struct MyOpaqueType(u32);
+
+// AFTER
+#[derive(Reflect)]
+#[reflect(opaque)]
+#[reflect(Default)]
+struct MyOpaqueType(u32);
+Note that the order in which #[reflect(opaque)] appears does not matter.
+
+reflect: implement the unique reflect rfc #
+PR #7207
+Reflection
+Most instances of dyn Reflect should be changed to dyn PartialReflect which is less restrictive, however trait bounds should generally stay as T: Reflect.
+The new PartialReflect::{as_partial_reflect, as_partial_reflect_mut, into_partial_reflect, try_as_reflect, try_as_reflect_mut, try_into_reflect} methods as well as Reflect::{as_reflect, as_reflect_mut, into_reflect} will need to be implemented for manual implementors of Reflect.
+Use FromReflect when extracting entities in dynamic scenes #
+PR #15174
+Reflection
+Scenes
+The DynamicScene format is changed to use custom serialize impls so old scene files will need updating:
+
+Old:
+
+(
+  resources: {},
+  entities: {
+    4294967299: (
+      components: {
+        "bevy_render::camera::projection::OrthographicProjection": (
+          near: 0.0,
+          far: 1000.0,
+          viewport_origin: (
+            x: 0.5,
+            y: 0.5,
+          ),
+          scaling_mode: WindowSize(1.0),
+          scale: 1.0,
+          area: (
+            min: (
+              x: -1.0,
+              y: -1.0,
+            ),
+            max: (
+              x: 1.0,
+              y: 1.0,
+            ),
+          ),
+        ),
+      },
+    ),
+  },
+)
+New:
+
+(
+  resources: {},
+  entities: {
+    4294967299: (
+      components: {
+        "bevy_render::camera::projection::OrthographicProjection": (
+          near: 0.0,
+          far: 1000.0,
+          viewport_origin: (0.5, 0.5),
+          scaling_mode: WindowSize(1.0),
+          scale: 1.0,
+          area: (
+            min: (-1.0, -1.0),
+            max: (1.0, 1.0),
+          ),
+        ),
+      },
+    ),
+  },
+)
+move ShortName to bevy_reflect #
+PR #15340
+Reflection
+Utils
+References to bevy_utils::ShortName should instead now be bevy_reflect::ShortName.
+Rendering #
+Retained Rendering #
+PR #15320
+Rendering
+With the advent of the retained render world, entities are no longer despawned at the end of every frame in the render world. Extracted entities with the TemporaryRenderEntity component will be despawned at the end of every frame like before.
+
+In order to make this possible, the Entity identifiers in the main and the extracted version in render world are no longer guaranteed to line up. As a result:
+
+all tools to spawn entities with a precise Entity id are in the process of being deprecated and will be removed
+collections that contain references to Entity that are extracted into the render world have been changed to contain MainEntity in order to prevent errors where a render world entity id is used to look up an item by accident. Custom rendering code may need to be changed to query for &MainEntity in order to look up the correct item from such a collection
+users who implement their own extraction logic for collections of main world entity should strongly consider extracting into a different collection that uses MainEntity as a key.
+render phases now require specifying both the Entity and MainEntity for a given PhaseItem. Custom render phases should ensure MainEntity is available when queuing a phase item
+Renderers can now check RenderVisibleEntities to avoid rendering items that are not visible from a view. RenderVisibleMeshEntities, RenderCubemapVisibleEntities, and RenderCascadeVisibleEntities are also available for more fine-grained control.
+
+To guide you further, let's take a look at a few common patterns. For every example, we specify in which world the code is run.
+
+Spawning entities in the render world #
+
+Previously, if you spawned an entity with world.spawn(...), commands.spawn(...) or some other method in the rendering world, it would be despawned at the end of each frame. In 0.15, this is no longer the case and so your old code could leak entities. This can be mitigated by either re-architecting your code to no longer continuously spawn entities (like you're used to in the main world), or by adding the bevy_render::world_sync::TemporaryRenderEntity component to the entity you're spawning. Entities tagged with TemporaryRenderEntity will be removed at the end of each frame (like before).
+
+Extract components with ExtractComponentPlugin #
+
+// main world
+app.add_plugins(ExtractComponentPlugin::<ComponentToExtract>::default());
+ExtractComponentPlugin has been changed to automatically sync entities with ComponentToExtract. This is done via the new WorldSyncPlugin. Any code using ExtractComponentPlugin will not require any changes.
+
+Manual extraction using Extract<Query<(Entity, ...)>> #
+
+// in render world, inspired by bevy_pbr/src/cluster/mod.rs
+pub fn extract_clusters(
+    mut commands: Commands,
+    views: Extract<Query<(Entity, &Clusters, &Camera)>>,
+) {
+    for (entity, clusters, camera) in &views {
+        // some code
+        commands.get_or_spawn(entity).insert(...);
+    }
+}
+An extract query in the render world queries for entities and components in the main world. Here entity is a main world entity and get_or_spawn(main_world_entity).insert(...) potentially inserts components on the wrong entity. Remember, there is no longer a one-to-one correspondence between the main and render world entities. Moreover get_or_spawn has been deprecated.
+
+In 0.15, you should use RenderEntity in place of Entity to get the correct entity in the render world. For entities to have a RenderEntity they need to be synced first. This can be done either via WorldSyncPlugin or adding the SyncToRenderWorld to the main world entity.
+
+This results in the following code:
+
+// in render world, inspired by bevy_pbr/src/cluster/mod.rs
+pub fn extract_clusters(
+    mut commands: Commands,
+    views: Extract<Query<(RenderEntity, &Clusters, &Camera)>>,
+) {
+    for (render_entity, clusters, camera) in &views {
+        // some code
+        // After the sync step, all main world entities with a &RenderEntity have a corresponding (empty) render world entity. This should never panic.
+        commands.entity(render_entity).insert(...);
+    }
+}
+
+// in main world, when spawning
+world.spawn((Clusters::default(), Camera::default(), SyncToRenderWorld))
+Looking up main world entities in the render world #
+
+In order to get the main world entity from a render world entity. It works much the same. Every synced render world entity has a MainEntity component you can query for that returns the correct main world entity.
+
+// in the render world
+pub fn inspect_clusters(
+    views: Query<(MainEntity, &Clusters, &Camera)>
+) {
+    for (main_entity, clusters, camera in &views) {
+        // do something
+    }
+}
+General advice for working with main and render world entities #
+
+When working with entities from both worlds it can be confusing. If you are every in a scenario where this isn't entirely clear (for example, when working on custom extraction code in the render world), we advise that you use RenderEntity and MainEntity as simple wrappers around Entity. Mixing these up can become a real headache and lead to some non-obvious errors.
+
+// render world 0.14
+pub instances: Vec<(Entity, RenderLayers, bool)>,
+
+// render world 0.15
+pub instances: Vec<(MainEntity, RenderLayers, bool)>,
+There are also other ways to disambiguate between the two worlds.
+
+// render world 0.14
+pub(crate) render_lightmaps: EntityHashMap<RenderLightmap>,
+
+// render world 0.15
+pub(crate) render_lightmaps: MainEntityHashMap<RenderLightmap>,
+Add 2d opaque phase with depth buffer #
+PR #13069
+Rendering
+ColorMaterial now contains AlphaMode2d. To keep previous behaviour, use AlphaMode::BLEND. If you know your sprite is opaque, use AlphaMode::OPAQUE
+Add RenderSet::FinalCleanup for World::clear_entities #
+PR #14764
+Rendering
+World::clear_entities is now part of RenderSet::PostCleanup rather than RenderSet::Cleanup. Your cleanup systems should likely stay in RenderSet::Cleanup.
+
+Add feature requirement info to image loading docs #
+PR #13712
+Rendering
+Image format related entities are feature gated, if there are compilation errors about unknown names there are some of features in list (exr, hdr, basis-universal, png, dds, tga, jpeg, bmp, ktx2, webp and pnm) should be added.
+
+Add support for environment map transformation #
+PR #14290
+Rendering
+Since we have added a new filed to the EnvironmentMapLight struct, users will need to include ..default() or some rotation value in their initialization code.
+Add support for skybox transformation #
+PR #14267
+Rendering
+Since we have added a new filed to the Skybox struct, users will need to include ..Default::default() or some rotation value in their initialization code.
+Added feature switch to default Standard Material's new anisotropy texture to off #
+PR #14048
+Rendering
+Add feature pbr_anisotropy_texture if you are using that texture in any standard materials.
+Added visibility bitmask as an alternative SSAO method #
+PR #13454
+Rendering
+SSAO algorithm was changed from GTAO to VBAO (visibility bitmasks). A new field, constant_object_thickness, was added to ScreenSpaceAmbientOcclusion. ScreenSpaceAmbientOcclusion also lost its Eq and Hash implementations.
+
+Adding alpha_threshold to OrderIndependentTransparencySettings for user-level optimization #
+PR #16090
+Rendering
+If you previously explicitly initialized OrderIndependentTransparencySettings with your own layer_count, you will now have to add either a ..default() statement or an explicit alpha_threshold value:
+
+fn setup(mut commands: Commands) {
+    commands.spawn((
+        Camera3d::default(),
+        OrderIndependentTransparencySettings {
+            layer_count: 16,
+            ..default()
+        },
+    ));
+}
+Adds ShaderStorageBuffer asset #
+PR #14663
+Rendering
+The AsBindGroup storage attribute has been modified to reference the new Handle<Storage> asset instead. Usages of Vec` should be converted into assets instead.
+
+Allow mix of hdr and non-hdr cameras to same render target #
+PR #13419
+Rendering
+Change CameraOutputMode to use ClearColorConfig instead of LoadOp.
+
+

@@ -1,0 +1,1021 @@
+Rust Versions #
+
+Stable: 1.83.0
+Beta: 1.84.0 (9 January, 2025, 34 days left)
+Nightly: 1.85.0 (20 February, 2025, 76 days left)
+Ongoing Stabilization PRs #
+
+Stabilize asm_goto feature gate (1 day old)
+Stabilize derive(CoercePointee) (2 days old)
+Stabilize noop_waker (20 days old)
+Stabilize let chains in the 2024 edition (26 days old)
+Stabilize async closures (RFC 3668) (29 days old)
+Stabilize #[diagnostic::do_not_recommend] (44 days old)
+Stabilize #[coverage] attribute (73 days old)
+Stabilize std::io::ErrorKind::QuotaExceeded (85 days old)
+Stabilize std::io::ErrorKind::CrossesDevices (86 days old)
+Stabilize tcp_quickack (113 days old)
+stabilize std::path::Path::file_prefix (113 days old)
+Stabilize count, ignore, index, and len (macro_metavar_expr) (260 days old)
+Stabilize associated type position impl Trait (ATPIT) (304 days old)
+Stabilize target_feature_11 (439 days old)
+Stabilize anonymous_lifetime_in_impl_trait (679 days old)
+About releases.rs #
+
+Github Repo
+Generated at Fri, 6 Dec 2024 17:22:18 +0000
+
+1.83.0 #
+
+Released on: 28 November, 2024
+Branched from master on: 11 October, 2024
+Language #
+
+Stabilize &mut, *mut, &Cell, and *const Cell in const.
+Allow creating references to statics in const initializers.
+Implement raw lifetimes and labels ('r#ident).
+Define behavior when atomic and non-atomic reads race.
+Non-exhaustive structs may now be empty.
+Disallow implicit coercions from places of type !
+const extern functions can now be defined for other calling conventions.
+Stabilize expr_2021 macro fragment specifier in all editions.
+The non_local_definitions lint now fires on less code and warns by default.
+Compiler #
+
+Deprecate unsound -Csoft-float flag.
+Add many new tier 3 targets:
+aarch64_unknown_nto_qnx700
+arm64e-apple-tvos
+armv7-rtems-eabihf
+loongarch64-unknown-linux-ohos
+riscv32-wrs-vxworks and riscv64-wrs-vxworks
+riscv32{e|em|emc}-unknown-none-elf
+x86_64-unknown-hurd-gnu
+x86_64-unknown-trusty
+Refer to Rust’s [platform support page][platform-support-doc] for more information on Rust’s tiered platform support.
+
+Libraries #
+
+Implement PartialEq for ExitCode.
+Document that catch_unwind can deal with foreign exceptions without UB, although the exact behavior is unspecified.
+Implement Default for HashMap/HashSet iterators that don’t already have it.
+Bump Unicode to version 16.0.0.
+Change documentation of ptr::add/sub to not claim equivalence with offset..
+Stabilized APIs #
+
+BufRead::skip_until
+ControlFlow::break_value
+ControlFlow::continue_value
+ControlFlow::map_break
+ControlFlow::map_continue
+DebugList::finish_non_exhaustive
+DebugMap::finish_non_exhaustive
+DebugSet::finish_non_exhaustive
+DebugTuple::finish_non_exhaustive
+ErrorKind::ArgumentListTooLong
+ErrorKind::Deadlock
+ErrorKind::DirectoryNotEmpty
+ErrorKind::ExecutableFileBusy
+ErrorKind::FileTooLarge
+ErrorKind::HostUnreachable
+ErrorKind::IsADirectory
+ErrorKind::NetworkDown
+ErrorKind::NetworkUnreachable
+ErrorKind::NotADirectory
+ErrorKind::NotSeekable
+ErrorKind::ReadOnlyFilesystem
+ErrorKind::ResourceBusy
+ErrorKind::StaleNetworkFileHandle
+ErrorKind::StorageFull
+ErrorKind::TooManyLinks
+Option::get_or_insert_default
+Waker::data
+Waker::new
+Waker::vtable
+char::MIN
+hash_map::Entry::insert_entry
+hash_map::VacantEntry::insert_entry
+These APIs are now stable in const contexts:
+
+Cell::into_inner
+Duration::as_secs_f32
+Duration::as_secs_f64
+Duration::div_duration_f32
+Duration::div_duration_f64
+MaybeUninit::as_mut_ptr
+NonNull::as_mut
+NonNull::copy_from
+NonNull::copy_from_nonoverlapping
+NonNull::copy_to
+NonNull::copy_to_nonoverlapping
+NonNull::slice_from_raw_parts
+NonNull::write
+NonNull::write_bytes
+NonNull::write_unaligned
+OnceCell::into_inner
+Option::as_mut
+Option::expect
+Option::replace
+Option::take
+Option::unwrap
+Option::unwrap_unchecked
+Option::<&_>::copied
+Option::<&mut _>::copied
+Option::<Option<_>>::flatten
+Option::<Result<_, _>>::transpose
+RefCell::into_inner
+Result::as_mut
+Result::<&_, _>::copied
+Result::<&mut _, _>::copied
+Result::<Option<_>, _>::transpose
+UnsafeCell::get_mut
+UnsafeCell::into_inner
+array::from_mut
+char::encode_utf8
+{float}::classify
+{float}::is_finite
+{float}::is_infinite
+{float}::is_nan
+{float}::is_normal
+{float}::is_sign_negative
+{float}::is_sign_positive
+{float}::is_subnormal
+{float}::from_bits
+{float}::from_be_bytes
+{float}::from_le_bytes
+{float}::from_ne_bytes
+{float}::to_bits
+{float}::to_be_bytes
+{float}::to_le_bytes
+{float}::to_ne_bytes
+mem::replace
+ptr::replace
+ptr::slice_from_raw_parts_mut
+ptr::write
+ptr::write_unaligned
+<*const _>::copy_to
+<*const _>::copy_to_nonoverlapping
+<*mut _>::copy_from
+<*mut _>::copy_from_nonoverlapping
+<*mut _>::copy_to
+<*mut _>::copy_to_nonoverlapping
+<*mut _>::write
+<*mut _>::write_bytes
+<*mut _>::write_unaligned
+slice::from_mut
+slice::from_raw_parts_mut
+<[_]>::first_mut
+<[_]>::last_mut
+<[_]>::first_chunk_mut
+<[_]>::last_chunk_mut
+<[_]>::split_at_mut
+<[_]>::split_at_mut_checked
+<[_]>::split_at_mut_unchecked
+<[_]>::split_first_mut
+<[_]>::split_last_mut
+<[_]>::split_first_chunk_mut
+<[_]>::split_last_chunk_mut
+str::as_bytes_mut
+str::as_mut_ptr
+str::from_utf8_unchecked_mut
+Cargo #
+
+Introduced a new CARGO_MANIFEST_PATH environment variable, similar to CARGO_MANIFEST_DIR but pointing directly to the manifest file.
+Added package.autolib to the manifest, allowing [lib] auto-discovery to be disabled.
+Declare support level for each crate in Cargo’s Charter / crate docs.
+Declare new Intentional Artifacts as ‘small’ changes.
+Rustdoc #
+
+The sidebar / hamburger menu table of contents now includes the # headers from the main item’s doc comment. This is similar to a third-party feature provided by the rustdoc-search-enhancements browser extension.
+Compatibility Notes #
+
+Warn against function pointers using unsupported ABI strings.
+
+Check well-formedness of the source type’s signature in fn pointer casts. This partly closes a soundness hole that comes when casting a function item to function pointer
+
+Use equality instead of subtyping when resolving type dependent paths.
+
+Linking on macOS now correctly includes Rust’s default deployment target. Due to a linker bug, you might have to pass MACOSX_DEPLOYMENT_TARGET or fix your #[link] attributes to point to the correct frameworks. See https://github.com/rust-lang/rust/pull/129369.
+
+Rust will now correctly raise an error for repr(Rust) written on non-struct/enum/union items, since it previous did not have any effect.
+
+The future incompatibility lint deprecated_cfg_attr_crate_type_name has been made into a hard error. It was used to deny usage of #![crate_type] and #![crate_name] attributes in #![cfg_attr], which required a hack in the compiler to be able to change the used crate type and crate name after cfg expansion. Users can use --crate-type instead of #![cfg_attr(..., crate_type = "...")] and --crate-name instead of #![cfg_attr(..., crate_name = "...")] when running rustc/cargo rustc on the command line. Use of those two attributes outside of #![cfg_attr] continue to be fully supported.
+
+Until now, paths into the sysroot were always prefixed with /rustc/$hash in diagnostics, codegen, backtrace, e.g.
+
+thread 'main' panicked at 'hello world', map-panic.rs:2:50
+stack backtrace:
+   0: std::panicking::begin_panic
+             at /rustc/a55dd71d5fb0ec5a6a3a9e8c27b2127ba491ce52/library/std/src/panicking.rs:616:12
+   1: map_panic::main::{{closure}}
+             at ./map-panic.rs:2:50
+   2: core::option::Option<T>::map
+             at /rustc/a55dd71d5fb0ec5a6a3a9e8c27b2127ba491ce52/library/core/src/option.rs:929:29
+   3: map_panic::main
+             at ./map-panic.rs:2:30
+   4: core::ops::function::FnOnce::call_once
+             at /rustc/a55dd71d5fb0ec5a6a3a9e8c27b2127ba491ce52/library/core/src/ops/function.rs:248:5
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+RFC 3127 said
+
+We want to change this behaviour such that, when rust-src source files can be discovered, the virtual path is discarded and therefore the local path will be embedded, unless there is a --remap-path-prefix that causes this local path to be remapped in the usual way.
+#129687 implements this behaviour, when rust-src is present at compile time, rustc replaces /rustc/$hash with a real path into the local rust-src component with best effort. To sanitize this, users must explicitly supply --remap-path-prefix=<path to rust-src>=foo or not have the rust-src component installed.
+
+The allow-by-default missing_docs lint used to disable itself when invoked through rustc --test/cargo test, resulting in #[expect(missing_docs)] emitting false positives due to the expectation being wrongly unfulfilled. This behavior has now been removed, which allows #[expect(missing_docs)] to be fulfilled in all scenarios, but will also report new missing_docs diagnostics for publicly reachable #[cfg(test)] items, integration test crate-level documentation, and publicly reachable items in integration tests.
+
+The armv8r-none-eabihf target now uses the Armv8-R required set of floating-point features.
+
+Fix a soundness bug where rustc wouldn’t detect unconstrained higher-ranked lifetimes in a dyn Trait’s associated types that occur due to supertraits.
+
+Update the minimum external LLVM version to 18.
+
+Remove aarch64-fuchsia and x86_64-fuchsia target aliases in favor of aarch64-unknown-fuchsia and x86_64-unknown-fuchsia respectively.
+
+The ABI-level exception class of a Rust panic is now encoded with native-endian bytes, so it is legible in hex dumps.
+
+Visual Studio 2013 is no longer supported for MSVC targets.
+
+The sysroot no longer contains the std dynamic library in its top-level lib/ dir.
+1.82.0 #
+
+Released on: 17 October, 2024
+Branched from master on: 30 August, 2024
+Language #
+
+Don’t make statement nonterminals match pattern nonterminals
+Patterns matching empty types can now be omitted in common cases
+Enforce supertrait outlives obligations when using trait impls
+addr_of(_mut)! macros and the newly stabilized &raw (const|mut) are now safe to use with all static items
+size_of_val_raw: for length 0 this is safe to call
+Reorder trait bound modifiers after for<...> binder in trait bounds
+Stabilize opaque type precise capturing (RFC 3617)
+Stabilize &raw const and &raw mut operators (RFC 2582)
+Stabilize unsafe extern blocks (RFC 3484)
+Stabilize nested field access in offset_of!
+Do not require T to be live when dropping [T; 0]
+Stabilize const operands in inline assembly
+Stabilize floating-point arithmetic in const fn
+Stabilize explicit opt-in to unsafe attributes
+Document NaN bit patterns guarantees
+Compiler #
+
+Promote riscv64gc-unknown-linux-musl to tier 2
+Promote Mac Catalyst targets aarch64-apple-ios-macabi and x86_64-apple-ios-macabi to Tier 2, and ship them with rustup
+Add tier 3 NuttX based targets for RISC-V and ARM
+Add tier 3 powerpc-unknown-linux-muslspe target
+Improved diagnostics to explain why a pattern is unreachable
+The compiler now triggers the unreachable code warning properly for async functions that don’t return/are -> !
+Promote aarch64-apple-darwin to Tier 1
+Add Trusty OS target aarch64-unknown-trusty and armv7-unknown-trusty as tier 3 targets
+Promote wasm32-wasip2 to Tier 2.
+Libraries #
+
+Generalize {Rc,Arc}::make_mut() to Path, OsStr, and CStr.
+Stabilized APIs #
+
+std::thread::Builder::spawn_unchecked
+std::str::CharIndices::offset
+std::option::Option::is_none_or
+[T]::is_sorted
+[T]::is_sorted_by
+[T]::is_sorted_by_key
+Iterator::is_sorted
+Iterator::is_sorted_by
+Iterator::is_sorted_by_key
+std::future::Ready::into_inner
+std::iter::repeat_n
+impl<T: Clone> DoubleEndedIterator for Take<Repeat<T>>
+impl<T: Clone> ExactSizeIterator for Take<Repeat<T>>
+impl<T: Clone> ExactSizeIterator for Take<RepeatWith<T>>
+impl Default for std::collections::binary_heap::Iter
+impl Default for std::collections::btree_map::RangeMut
+impl Default for std::collections::btree_map::ValuesMut
+impl Default for std::collections::vec_deque::Iter
+impl Default for std::collections::vec_deque::IterMut
+Rc<T>::new_uninit
+Rc<MaybeUninit<T>>::assume_init
+Rc<[T]>::new_uninit_slice
+Rc<[MaybeUninit<T>]>::assume_init
+Arc<T>::new_uninit
+Arc<MaybeUninit<T>>::assume_init
+Arc<[T]>::new_uninit_slice
+Arc<[MaybeUninit<T>]>::assume_init
+Box<T>::new_uninit
+Box<MaybeUninit<T>>::assume_init
+Box<[T]>::new_uninit_slice
+Box<[MaybeUninit<T>]>::assume_init
+core::arch::x86_64::_bextri_u64
+core::arch::x86_64::_bextri_u32
+core::arch::x86::_mm_broadcastsi128_si256
+core::arch::x86::_mm256_stream_load_si256
+core::arch::x86::_tzcnt_u16
+core::arch::x86::_mm_extracti_si64
+core::arch::x86::_mm_inserti_si64
+core::arch::x86::_mm_storeu_si16
+core::arch::x86::_mm_storeu_si32
+core::arch::x86::_mm_storeu_si64
+core::arch::x86::_mm_loadu_si16
+core::arch::x86::_mm_loadu_si32
+core::arch::wasm32::u8x16_relaxed_swizzle
+core::arch::wasm32::i8x16_relaxed_swizzle
+core::arch::wasm32::i32x4_relaxed_trunc_f32x4
+core::arch::wasm32::u32x4_relaxed_trunc_f32x4
+core::arch::wasm32::i32x4_relaxed_trunc_f64x2_zero
+core::arch::wasm32::u32x4_relaxed_trunc_f64x2_zero
+core::arch::wasm32::f32x4_relaxed_madd
+core::arch::wasm32::f32x4_relaxed_nmadd
+core::arch::wasm32::f64x2_relaxed_madd
+core::arch::wasm32::f64x2_relaxed_nmadd
+core::arch::wasm32::i8x16_relaxed_laneselect
+core::arch::wasm32::u8x16_relaxed_laneselect
+core::arch::wasm32::i16x8_relaxed_laneselect
+core::arch::wasm32::u16x8_relaxed_laneselect
+core::arch::wasm32::i32x4_relaxed_laneselect
+core::arch::wasm32::u32x4_relaxed_laneselect
+core::arch::wasm32::i64x2_relaxed_laneselect
+core::arch::wasm32::u64x2_relaxed_laneselect
+core::arch::wasm32::f32x4_relaxed_min
+core::arch::wasm32::f32x4_relaxed_max
+core::arch::wasm32::f64x2_relaxed_min
+core::arch::wasm32::f64x2_relaxed_max
+core::arch::wasm32::i16x8_relaxed_q15mulr
+core::arch::wasm32::u16x8_relaxed_q15mulr
+core::arch::wasm32::i16x8_relaxed_dot_i8x16_i7x16
+core::arch::wasm32::u16x8_relaxed_dot_i8x16_i7x16
+core::arch::wasm32::i32x4_relaxed_dot_i8x16_i7x16_add
+core::arch::wasm32::u32x4_relaxed_dot_i8x16_i7x16_add
+These APIs are now stable in const contexts:
+
+std::task::Waker::from_raw
+std::task::Context::from_waker
+std::task::Context::waker
+$integer::from_str_radix
+std::num::ParseIntError::kind
+Cargo #
+
+feat: Add info cargo subcommand
+Compatibility Notes #
+
+We now disallow setting some built-in cfgs via the command-line with the newly added explicit_builtin_cfgs_in_flags lint in order to prevent incoherent state, eg. windows cfg active but target is Linux based. The appropriate rustc flag should be used instead.
+The standard library has a new implementation of binary_search which is significantly improves performance (#128254). However when a sorted slice has multiple values which compare equal, the new implementation may select a different value among the equal ones than the old implementation.
+illumos/Solaris now sets MSG_NOSIGNAL when writing to sockets. This avoids killing the process with SIGPIPE when writing to a closed socket, which matches the existing behavior on other UNIX targets.
+Removes a problematic hack that always passed the –whole-archive linker flag for tests, which may cause linker errors for code accidentally relying on it.
+The WebAssembly target features multivalue and reference-types are now both enabled by default. These two features both have subtle changes implied for generated WebAssembly binaries. For the multivalue feature, WebAssembly target support has changed when upgrading to LLVM 19. Support for generating functions with multiple returns no longer works and -Ctarget-feature=+multivalue has a different meaning than it did in LLVM 18 and prior. There is no longer any supported means to generate a module that has a function with multiple returns in WebAssembly from Rust source code. For the reference-types feature the encoding of immediates in the call_indirect, a commonly used instruction by the WebAssembly backend, has changed. Validators and parsers which don’t understand the reference-types proposal will no longer accept modules produced by LLVM due to this change in encoding of immediates. Additionally these features being enabled are encoded in the target_features custom section and may affect downstream tooling such as wasm-opt consuming the module. Generating a WebAssembly module that disables default features requires -Zbuild-std support from Cargo and more information can be found at rust-lang/rust#128511.
+Rust now raises unsafety errors for union patterns in parameter-position
+Internal Changes #
+
+These changes do not affect any public interfaces of Rust, but they represent significant improvements to the performance or internals of rustc and related tools.
+
+Update to LLVM 19
+1.81.0 #
+
+Released on: 5 September, 2024
+Branched from master on: 19 July, 2024
+Language #
+
+Abort on uncaught panics in extern "C" functions.
+Fix ambiguous cases of multiple & in elided self lifetimes.
+Stabilize #[expect] for lints (RFC 2383), like #[allow] with a warning if the lint is not fulfilled.
+Change method resolution to constrain hidden types instead of rejecting method candidates.
+Bump elided_lifetimes_in_associated_constant to deny.
+offset_from: always allow pointers to point to the same address.
+Allow constraining opaque types during subtyping in the trait system.
+Allow constraining opaque types during various unsizing casts.
+Deny keyword lifetimes pre-expansion.
+Compiler #
+
+Make casts of pointers to trait objects stricter.
+Check alias args for well-formedness even if they have escaping bound vars.
+Deprecate no-op codegen option -Cinline-threshold=....
+Re-implement a type-size based limit.
+Properly account for alignment in transmute size checks.
+Remove the box_pointers lint.
+Ensure the interpreter checks bool/char for validity when they are used in a cast.
+Improve coverage instrumentation for functions containing nested items.
+Target changes:
+Add Tier 3 no_std Xtensa targets: xtensa-esp32-none-elf, xtensa-esp32s2-none-elf, xtensa-esp32s3-none-elf
+Add Tier 3 std Xtensa targets: xtensa-esp32-espidf, xtensa-esp32s2-espidf, xtensa-esp32s3-espidf
+Add Tier 3 i686 Redox OS target: i686-unknown-redox
+Promote arm64ec-pc-windows-msvc to Tier 2.
+Promote loongarch64-unknown-linux-musl to Tier 2 with host tools.
+Enable full tools and profiler for LoongArch Linux targets.
+Unconditionally warn on usage of wasm32-wasi. (see compatibility note below)
+Refer to Rust’s [platform support page][platform-support-doc] for more information on Rust’s tiered platform support.
+Libraries #
+
+Split core’s PanicInfo and std’s PanicInfo. (see compatibility note below)
+Generalize {Rc,Arc}::make_mut() to unsized types.
+Replace sort implementations with stable driftsort and unstable ipnsort. All slice::sort* and slice::select_nth* methods are expected to see significant performance improvements. See the research project for more details.
+Document behavior of create_dir_all with respect to empty paths.
+Fix interleaved output in the default panic hook when multiple threads panic simultaneously.
+Stabilized APIs #
+
+core::error
+hint::assert_unchecked
+fs::exists
+AtomicBool::fetch_not
+Duration::abs_diff
+IoSlice::advance
+IoSlice::advance_slices
+IoSliceMut::advance
+IoSliceMut::advance_slices
+PanicHookInfo
+PanicInfo::message
+PanicMessage
+These APIs are now stable in const contexts:
+
+char::from_u32_unchecked (function)
+char::from_u32_unchecked (method)
+CStr::count_bytes
+CStr::from_ptr
+Cargo #
+
+Generated .cargo_vcs_info.json is always included, even when --allow-dirty is passed.
+Disallow package.license-file and package.readme pointing to non-existent files during packaging.
+Disallow passing --release/--debug flag along with the --profile flag.
+Remove lib.plugin key support in Cargo.toml. Rust plugin support has been deprecated for four years and was removed in 1.75.0.
+Compatibility Notes #
+
+Usage of the wasm32-wasi target will now issue a compiler warning and request users switch to the wasm32-wasip1 target instead. Both targets are the same, wasm32-wasi is only being renamed, and this change to the WASI target is being done to enable removing wasm32-wasi in January 2025.
+
+We have renamed std::panic::PanicInfo to std::panic::PanicHookInfo. The old name will continue to work as an alias, but will result in a deprecation warning starting in Rust 1.82.0.
+
+core::panic::PanicInfo will remain unchanged, however, as this is now a different type.
+
+The reason is that these types have different roles: std::panic::PanicHookInfo is the argument to the panic hook in std context (where panics can have an arbitrary payload), while core::panic::PanicInfo is the argument to the #[panic_handler] in no_std context (where panics always carry a formatted message). Separating these types allows us to add more useful methods to these types, such as std::panic::PanicHookInfo::payload_as_str() and core::panic::PanicInfo::message().
+
+The new sort implementations may panic if a type’s implementation of Ord (or the given comparison function) does not implement a total order as the trait requires. Ord’s supertraits (PartialOrd, Eq, and PartialEq) must also be consistent. The previous implementations would not “notice” any problem, but the new implementations have a good chance of detecting inconsistencies, throwing a panic rather than returning knowingly unsorted data.
+
+In very rare cases, a change in the internal evaluation order of the trait solver may result in new fatal overflow errors.
+
+Internal Changes #
+
+These changes do not affect any public interfaces of Rust, but they represent significant improvements to the performance or internals of rustc and related tools.
+
+Add a Rust-for Linux auto CI job to check kernel builds.
+1.80.1 #
+
+Released on: 8 August, 2024
+This is a patch release
+Fix miscompilation in the jump threading MIR optimization when comparing floats
+Revert changes to the dead_code lint from 1.80.0
+
+1.80.0 #
+
+Released on: 25 July, 2024
+Branched from master on: 7 June, 2024
+Language #
+
+Document maximum allocation size
+Allow zero-byte offsets and ZST read/writes on arbitrary pointers
+Support C23’s variadics without a named parameter
+Stabilize exclusive_range_pattern feature
+Guarantee layout and ABI of Result in some scenarios
+Compiler #
+
+Update cc crate to v1.0.97 allowing additional spectre mitigations on MSVC targets
+Allow field reordering on types marked repr(packed(1))
+Add a lint against never type fallback affecting unsafe code
+Disallow cast with trailing braced macro in let-else
+Expand for_loops_over_fallibles lint to lint on fallibles behind references.
+self-contained linker: retry linking without -fuse-ld=lld on CCs that don’t support it
+Do not parse CVarArgs (...) as a type in trait bounds
+Improvements to LLDB formatting #124458 #124500
+For the wasm32-wasip2 target default to PIC and do not use -fuse-ld=lld
+Add x86_64-unknown-linux-none as a tier 3 target
+Lint on foo.into_iter() resolving to &Box<[T]>: IntoIterator
+Libraries #
+
+Add size_of and size_of_val and align_of and align_of_val to the prelude
+Abort a process when FD ownership is violated
+io::Write::write_fmt: panic if the formatter fails when the stream does not fail
+Panic if PathBuf::set_extension would add a path separator
+Add assert_unsafe_precondition to unchecked_{add,sub,neg,mul,shl,shr} methods
+Update c_char on AIX to use the correct type
+offset_of! no longer returns a temporary
+Handle sigma in str.to_lowercase correctly
+Raise DEFAULT_MIN_STACK_SIZE to at least 64KiB
+Stabilized APIs #
+
+impl Default for Rc<CStr>
+impl Default for Rc<str>
+impl Default for Rc<[T]>
+impl Default for Arc<str>
+impl Default for Arc<CStr>
+impl Default for Arc<[T]>
+impl IntoIterator for Box<[T]>
+impl FromIterator<String> for Box<str>
+impl FromIterator<char> for Box<str>
+LazyCell
+LazyLock
+Duration::div_duration_f32
+Duration::div_duration_f64
+Option::take_if
+Seek::seek_relative
+BinaryHeap::as_slice
+NonNull::offset
+NonNull::byte_offset
+NonNull::add
+NonNull::byte_add
+NonNull::sub
+NonNull::byte_sub
+NonNull::offset_from
+NonNull::byte_offset_from
+NonNull::read
+NonNull::read_volatile
+NonNull::read_unaligned
+NonNull::write
+NonNull::write_volatile
+NonNull::write_unaligned
+NonNull::write_bytes
+NonNull::copy_to
+NonNull::copy_to_nonoverlapping
+NonNull::copy_from
+NonNull::copy_from_nonoverlapping
+NonNull::replace
+NonNull::swap
+NonNull::drop_in_place
+NonNull::align_offset
+<[T]>::split_at_checked
+<[T]>::split_at_mut_checked
+str::split_at_checked
+str::split_at_mut_checked
+str::trim_ascii
+str::trim_ascii_start
+str::trim_ascii_end
+<[u8]>::trim_ascii
+<[u8]>::trim_ascii_start
+<[u8]>::trim_ascii_end
+Ipv4Addr::BITS
+Ipv4Addr::to_bits
+Ipv4Addr::from_bits
+Ipv6Addr::BITS
+Ipv6Addr::to_bits
+Ipv6Addr::from_bits
+Vec::<[T; N]>::into_flattened
+<[[T; N]]>::as_flattened
+<[[T; N]]>::as_flattened_mut
+These APIs are now stable in const contexts:
+
+<[T]>::last_chunk
+BinaryHeap::new
+Cargo #
+
+Stabilize -Zcheck-cfg as always enabled
+Warn, rather than fail publish, if a target is excluded
+Add special check-cfg lint config for the unexpected_cfgs lint
+Stabilize cargo update --precise <yanked>
+Don’t change file permissions on Cargo.toml when using cargo add
+Support using cargo fix on IPv6-only networks
+Rustdoc #
+
+Allow searching for references
+Stabilize custom_code_classes_in_docs feature
+fix: In cross-crate scenarios show enum variants on type aliases of enums
+Compatibility Notes #
+
+rustfmt estimates line lengths differently when using non-ascii characters
+Type aliases are now handled correctly in orphan check
+Allow instructing rustdoc to read from stdin via -
+std::env::{set_var, remove_var} can no longer be converted to safe function pointers and no longer implement the Fn family of traits
+Warn (or error) when Self constructor from outer item is referenced in inner nested item
+Turn indirect_structural_match and pointer_structural_match lints into hard errors
+Make where_clause_object_safety lint a regular object safety violation
+Turn proc_macro_back_compat lint into a hard error.
+Detect unused structs even when implementing private traits
+std::sync::ReentrantLockGuard<T> is no longer Sync if T: !Sync which means std::io::StdoutLock and std::io::StderrLock are no longer Sync
+Type inference will fail in some cases due to new implementations of FromIterator for Box<str>. Notably, this breaks versions of the time crate before 0.3.35, due to no longer inferring the implementation for Box<[_]>.
+Internal Changes #
+
+These changes do not affect any public interfaces of Rust, but they represent significant improvements to the performance or internals of rustc and related tools.
+
+Misc improvements to size of generated html by rustdoc e.g. #124738 and #123734
+MSVC targets no longer depend on libc
+
+1.79.0 #
+
+Released on: 13 June, 2024
+Branched from master on: 26 April, 2024
+Language #
+
+Stabilize inline const {} expressions.
+Prevent opaque types being instantiated twice with different regions within the same function.
+Stabilize WebAssembly target features that are in phase 4 and 5.
+Add the redundant_lifetimes lint to detect lifetimes which are semantically redundant.
+Stabilize the unnameable_types lint for public types that can’t be named.
+Enable debuginfo in macros, and stabilize -C collapse-macro-debuginfo and #[collapse_debuginfo].
+Propagate temporary lifetime extension into if and match expressions.
+Restrict promotion of const fn calls.
+Warn against refining impls of crate-private traits with refining_impl_trait lint.
+Stabilize associated type bounds (RFC 2289).
+Stabilize importing main from other modules or crates.
+Check return types of function types for well-formedness
+Rework impl Trait lifetime inference
+Change inductive trait solver cycles to be ambiguous
+Compiler #
+
+Define -C strip to only affect binaries, not artifacts like .pdb.
+Stabilize -Crelro-level for controlling runtime link hardening.
+Stabilize checking of cfg names and values at compile-time with --check-cfg. Note that this only stabilizes the compiler part, the Cargo part is still unstable in this release.
+Add aarch64-apple-visionos and aarch64-apple-visionos-sim tier 3 targets.
+Add riscv32ima-unknown-none-elf tier 3 target.
+Promote several Windows targets to tier 2: aarch64-pc-windows-gnullvm, i686-pc-windows-gnullvm, and x86_64-pc-windows-gnullvm.
+Refer to Rust’s [platform support page][platform-support-doc] for more information on Rust’s tiered platform support.
+
+Libraries #
+
+Implement FromIterator for (impl Default + Extend, impl Default + Extend).
+Implement {Div,Rem}Assign<NonZero<X>> on X.
+Document overrides of clone_from() in core/std.
+Link MSVC default lib in core.
+Caution against using transmute between pointers and integers.
+Enable frame pointers for the standard library.
+Stabilized APIs #
+
+{integer}::unchecked_add
+{integer}::unchecked_mul
+{integer}::unchecked_sub
+<[T]>::split_at_unchecked
+<[T]>::split_at_mut_unchecked
+<[u8]>::utf8_chunks
+str::Utf8Chunks
+str::Utf8Chunk
+<*const T>::is_aligned
+<*mut T>::is_aligned
+NonNull::is_aligned
+<*const [T]>::len
+<*mut [T]>::len
+<*const [T]>::is_empty
+<*mut [T]>::is_empty
+NonNull::<[T]>::is_empty
+CStr::count_bytes
+io::Error::downcast
+num::NonZero<T>
+path::absolute
+proc_macro::Literal::byte_character
+proc_macro::Literal::c_string
+These APIs are now stable in const contexts:
+
+Atomic*::into_inner
+io::Cursor::new
+io::Cursor::get_ref
+io::Cursor::position
+io::empty
+io::repeat
+io::sink
+panic::Location::caller
+panic::Location::file
+panic::Location::line
+panic::Location::column
+Cargo #
+
+Prevent dashes in lib.name, always normalizing to _.
+Stabilize MSRV-aware version requirement selection in cargo add.
+Switch to using gitoxide by default for listing files.
+Rustdoc #
+
+Always display stability version even if it’s the same as the containing item.
+Show a single search result for items with multiple paths.
+Support typing / in docs to begin a search.
+Misc #
+
+Compatibility Notes #
+
+Update the minimum external LLVM to 17.
+RustcEncodable and RustcDecodable are soft-destabilized, to be removed from the prelude in next edition.
+The wasm_c_abi future-incompatibility lint will warn about use of the non-spec-compliant C ABI. Use wasm-bindgen v0.2.88 to generate forward-compatible bindings.
+Check return types of function types for well-formedness
+1.79.0 #
+
+Released on: 13 June, 2024
+Branched from master on: 26 April, 2024
+Language #
+
+Stabilize inline const {} expressions.
+Prevent opaque types being instantiated twice with different regions within the same function.
+Stabilize WebAssembly target features that are in phase 4 and 5.
+Add the redundant_lifetimes lint to detect lifetimes which are semantically redundant.
+Stabilize the unnameable_types lint for public types that can’t be named.
+Enable debuginfo in macros, and stabilize -C collapse-macro-debuginfo and #[collapse_debuginfo].
+Propagate temporary lifetime extension into if and match expressions.
+Restrict promotion of const fn calls.
+Warn against refining impls of crate-private traits with refining_impl_trait lint.
+Stabilize associated type bounds (RFC 2289).
+Stabilize importing main from other modules or crates.
+Check return types of function types for well-formedness
+Rework impl Trait lifetime inference
+Change inductive trait solver cycles to be ambiguous
+Compiler #
+
+Define -C strip to only affect binaries, not artifacts like .pdb.
+Stabilize -Crelro-level for controlling runtime link hardening.
+Stabilize checking of cfg names and values at compile-time with --check-cfg. Note that this only stabilizes the compiler part, the Cargo part is still unstable in this release.
+Add aarch64-apple-visionos and aarch64-apple-visionos-sim tier 3 targets.
+Add riscv32ima-unknown-none-elf tier 3 target.
+Promote several Windows targets to tier 2: aarch64-pc-windows-gnullvm, i686-pc-windows-gnullvm, and x86_64-pc-windows-gnullvm.
+Refer to Rust’s [platform support page][platform-support-doc] for more information on Rust’s tiered platform support.
+
+Libraries #
+
+Implement FromIterator for (impl Default + Extend, impl Default + Extend).
+Implement {Div,Rem}Assign<NonZero<X>> on X.
+Document overrides of clone_from() in core/std.
+Link MSVC default lib in core.
+Caution against using transmute between pointers and integers.
+Enable frame pointers for the standard library.
+Stabilized APIs #
+
+{integer}::unchecked_add
+{integer}::unchecked_mul
+{integer}::unchecked_sub
+<[T]>::split_at_unchecked
+<[T]>::split_at_mut_unchecked
+<[u8]>::utf8_chunks
+str::Utf8Chunks
+str::Utf8Chunk
+<*const T>::is_aligned
+<*mut T>::is_aligned
+NonNull::is_aligned
+<*const [T]>::len
+<*mut [T]>::len
+<*const [T]>::is_empty
+<*mut [T]>::is_empty
+NonNull::<[T]>::is_empty
+CStr::count_bytes
+io::Error::downcast
+num::NonZero<T>
+path::absolute
+proc_macro::Literal::byte_character
+proc_macro::Literal::c_string
+These APIs are now stable in const contexts:
+
+Atomic*::into_inner
+io::Cursor::new
+io::Cursor::get_ref
+io::Cursor::position
+io::empty
+io::repeat
+io::sink
+panic::Location::caller
+panic::Location::file
+panic::Location::line
+panic::Location::column
+Cargo #
+
+Prevent dashes in lib.name, always normalizing to _.
+Stabilize MSRV-aware version requirement selection in cargo add.
+Switch to using gitoxide by default for listing files.
+Rustdoc #
+
+Always display stability version even if it’s the same as the containing item.
+Show a single search result for items with multiple paths.
+Support typing / in docs to begin a search.
+Misc #
+
+Compatibility Notes #
+
+Update the minimum external LLVM to 17.
+RustcEncodable and RustcDecodable are soft-destabilized, to be removed from the prelude in next edition.
+The wasm_c_abi future-incompatibility lint will warn about use of the non-spec-compliant C ABI. Use wasm-bindgen v0.2.88 to generate forward-compatible bindings.
+Check return types of function types for well-formedness
+1.74.0 #
+
+Released on: 16 November, 2023
+Branched from master on: 29 September, 2023
+Language #
+
+Codify that std::mem::Discriminant<T> does not depend on any lifetimes in T
+Replace private_in_public lint with private_interfaces and private_bounds per RFC 2145. Read more in RFC 2145.
+Allow explicit #[repr(Rust)]
+closure field capturing: don’t depend on alignment of packed fields
+Enable MIR-based drop-tracking for async blocks
+Stabilize impl_trait_projections
+Compiler #
+
+stabilize combining +bundle and +whole-archive link modifiers
+Stabilize PATH option for --print KIND=PATH
+Enable ASAN/LSAN/TSAN for *-apple-ios-macabi
+Promote loongarch64-unknown-none* to Tier 2
+Add i686-pc-windows-gnullvm as a tier 3 target
+Libraries #
+
+Implement From<OwnedFd/Handle> for ChildStdin/out/err
+Implement From<{&,&mut} [T; N]> for Vec<T> where T: Clone
+impl Step for IP addresses
+Implement From<[T; N]> for Rc<[T]> and Arc<[T]>
+impl TryFrom<char> for u16
+Stabilize io_error_other feature
+Stabilize the Saturating type
+Stabilize const_transmute_copy
+Stabilized APIs #
+
+core::num::Saturating
+impl From<io::Stdout> for std::process::Stdio
+impl From<io::Stderr> for std::process::Stdio
+impl From<OwnedHandle> for std::process::Child{Stdin, Stdout, Stderr}
+impl From<OwnedFd> for std::process::Child{Stdin, Stdout, Stderr}
+std::ffi::OsString::from_encoded_bytes_unchecked
+std::ffi::OsString::into_encoded_bytes
+std::ffi::OsStr::from_encoded_bytes_unchecked
+std::ffi::OsStr::as_encoded_bytes
+std::io::Error::other
+impl TryFrom<char> for u16
+impl<T: Clone, const N: usize> From<&[T; N]> for Vec<T>
+impl<T: Clone, const N: usize> From<&mut [T; N]> for Vec<T>
+impl<T, const N: usize> From<[T; N]> for Arc<[T]>
+impl<T, const N: usize> From<[T; N]> for Rc<[T]>
+These APIs are now stable in const contexts:
+
+core::mem::transmute_copy
+str::is_ascii
+[u8]::is_ascii
+Cargo #
+
+In Cargo.toml, stabilize [lints]
+Stabilize credential-process and registry-auth
+Stabilize --keep-going build flag
+Add styling to --help output
+For cargo clean, add --dry-run flag and summary line at the end
+For cargo update, make --package more convenient by being positional
+For cargo update, clarify meaning of –aggressive as –recursive
+Add ‘-n’ as an alias for --dry-run
+Allow version-prefixes in pkgid’s (e.g. --package flags) to resolve ambiguities
+In .cargo/config.toml, merge lists in precedence order
+Add support for target.'cfg(..)'.linker
+Rustdoc #
+
+Add warning block support in rustdoc
+rustdoc-search: add support for type parameters
+rustdoc: show inner enum and struct in type definition for concrete type
+Compatibility Notes #
+
+Raise minimum supported Apple OS versions
+make Cell::swap panic if the Cells partially overlap
+Reject invalid crate names in --extern
+Don’t resolve generic impls that may be shadowed by dyn built-in impls
+The new impl From<{&,&mut} [T; N]> for Vec<T> is known to cause some inference failures with overly-generic code. In those examples using the tui crate, the combination of AsRef<_> and Into<Vec> leaves the middle type ambiguous, and the new impl adds another possibility, so it now requires an explicit type annotation.
+Internal Changes #
+
+These changes do not affect any public interfaces of Rust, but they represent significant improvements to the performance or internals of rustc and related tools.
+
+None this cycle.
+1.74.1 #
+
+Released on: 7 December, 2023
+This is a patch release
+Changes #
+
+Resolved spurious STATUS_ACCESS_VIOLATIONs in LLVM
+Clarify guarantees for std::mem::discriminant
+Fix some subtyping-related regressions
+
+1.75.0 #
+
+Released on: 28 December, 2023
+Branched from master on: 10 November, 2023
+Language #
+
+Stabilize async fn and return-position impl Trait in traits.
+Allow function pointer signatures containing &mut T in const contexts.
+Match usize/isize exhaustively with half-open ranges.
+Guarantee that char has the same size and alignment as u32.
+Document that the null pointer has the 0 address.
+Allow partially moved values in match.
+Add notes about non-compliant FP behavior on 32bit x86 targets.
+Stabilize ratified RISC-V target features.
+Compiler #
+
+Rework negative coherence to properly consider impls that only partly overlap.
+Bump COINDUCTIVE_OVERLAP_IN_COHERENCE to deny, and warn in dependencies.
+Consider alias bounds when computing liveness in NLL.
+Add the V (vector) extension to the riscv64-linux-android target spec.
+Automatically enable cross-crate inlining for small functions
+Add several new tier 3 targets:
+csky-unknown-linux-gnuabiv2hf
+i586-unknown-netbsd
+mipsel-unknown-netbsd
+Refer to Rust’s [platform support page][platform-support-doc] for more information on Rust’s tiered platform support.
+
+Libraries #
+
+Override Waker::clone_from to avoid cloning Wakers unnecessarily.
+Implement BufRead for VecDeque<u8>.
+Implement FusedIterator for DecodeUtf16 when the inner iterator does.
+Implement Not, Bit{And,Or}{,Assign} for IP addresses.
+Implement Default for ExitCode.
+Guarantee representation of None in NPO
+Document when atomic loads are guaranteed read-only.
+Broaden the consequences of recursive TLS initialization.
+Windows: Support sub-millisecond sleep.
+Fix generic bound of str::SplitInclusive’s DoubleEndedIterator impl
+Fix exit status / wait status on non-Unix cfg(unix) platforms.
+Stabilized APIs #
+
+Atomic*::from_ptr
+FileTimes
+FileTimesExt
+File::set_modified
+File::set_times
+IpAddr::to_canonical
+Ipv6Addr::to_canonical
+Option::as_slice
+Option::as_mut_slice
+pointer::byte_add
+pointer::byte_offset
+pointer::byte_offset_from
+pointer::byte_sub
+pointer::wrapping_byte_add
+pointer::wrapping_byte_offset
+pointer::wrapping_byte_sub
+These APIs are now stable in const contexts:
+
+Ipv6Addr::to_ipv4_mapped
+MaybeUninit::assume_init_read
+MaybeUninit::zeroed
+mem::discriminant
+mem::zeroed
+Cargo #
+
+Add new packages to [workspace.members] automatically.
+Allow version-less Cargo.toml manifests.
+Make browser links out of HTML file paths.
+Rustdoc #
+
+Accept less invalid Rust in rustdoc.
+Document lack of object safety on affected traits.
+Hide #[repr(transparent)] if it isn’t part of the public ABI.
+Show enum discriminant if it is a C-like variant.
+Compatibility Notes #
+
+FreeBSD targets now require at least version 12.
+Formally demote tier 2 MIPS targets to tier 3.
+Make misalignment a hard error in const contexts.
+Fix detecting references to packed unsized fields.
+Remove support for compiler plugins.
+Internal Changes #
+
+These changes do not affect any public interfaces of Rust, but they represent significant improvements to the performance or internals of rustc and related tools.
+
+Optimize librustc_driver.so with BOLT.
+Enable parallel rustc front end in dev and nightly builds.
+Distribute rustc-codegen-cranelift as rustup component on the nightly channel.
+1.76.0 #
+
+Released on: 8 February, 2024
+Branched from master on: 22 December, 2023
+Language #
+
+Document Rust ABI compatibility between various types
+Also: guarantee that char and u32 are ABI-compatible
+Add lint ambiguous_wide_pointer_comparisons that supersedes clippy::vtable_address_comparisons
+Compiler #
+
+Lint pinned #[must_use] pointers (in particular, Box<T> where T is #[must_use]) in unused_must_use.
+Soundness fix: fix computing the offset of an unsized field in a packed struct
+Soundness fix: fix dynamic size/align computation logic for packed types with dyn Trait tail
+Add $message_type field to distinguish json diagnostic outputs
+Enable Rust to use the EHCont security feature of Windows
+Add tier 3 {x86_64,i686}-win7-windows-msvc targets
+Add tier 3 aarch64-apple-watchos target
+Add tier 3 arm64e-apple-ios & arm64e-apple-darwin targets
+Refer to Rust’s [platform support page][platform-support-doc] for more information on Rust’s tiered platform support.
+
+Libraries #
+
+Add a column number to dbg!()
+Add std::hash::{DefaultHasher, RandomState} exports
+Fix rounding issue with exponents in fmt
+Add T: ?Sized to RwLockReadGuard and RwLockWriteGuard’s Debug impls.
+Windows: Allow File::create to work on hidden files
+Stabilized APIs #
+
+Arc::unwrap_or_clone
+Rc::unwrap_or_clone
+Result::inspect
+Result::inspect_err
+Option::inspect
+type_name_of_val
+std::hash::{DefaultHasher, RandomState} These were previously available only through std::collections::hash_map.
+ptr::{from_ref, from_mut}
+ptr::addr_eq
+Cargo #
+
+See Cargo release notes.
+
+Rustdoc #
+
+Don’t merge cfg and doc(cfg) attributes for re-exports
+rustdoc: allow resizing the sidebar / hiding the top bar
+rustdoc-search: add support for traits and associated types
+rustdoc: Add highlighting for comments in items declaration
+Compatibility Notes #
+
+Add allow-by-default lint for unit bindings This is expected to be upgraded to a warning by default in a future Rust release. Some macros emit bindings with type () with user-provided spans, which means that this lint will warn for user code.
+Remove x86_64-sun-solaris target.
+Remove asmjs-unknown-emscripten target
+Report errors in jobserver inherited through environment variables This may warn on benign problems too.
+Update the minimum external LLVM to 16.
+Improve print_tts This change can break some naive manual parsing of token trees in proc macro code which expect a particular structure after .to_string(), rather than just arbitrary Rust code.
+Make IMPLIED_BOUNDS_ENTAILMENT into a hard error from a lint
+Vec’s allocation behavior was changed when collecting some iterators Allocation behavior is currently not specified, nevertheless changes can be surprising. See impl FromIterator for Vec for more details.
+Properly reject default on free const items
