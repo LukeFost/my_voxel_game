@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 mod voxel;
 mod world;
+mod chunk;
 
 use voxel::VoxelPlugin;
 use world::WorldPlugin;

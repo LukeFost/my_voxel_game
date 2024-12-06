@@ -1,39 +1,42 @@
 use bevy::prelude::*;
 use crate::voxel::{Voxel, VoxelMaterial};
+use crate::chunk::{Chunk, CHUNK_SIZE};
 
-pub const CHUNK_SIZE: i32 = 16;
-
-#[derive(Resource)]
+#[derive(Resource, Default)]
 pub struct VoxelWorld {
     chunks: Vec<Chunk>,
 }
 
-pub struct Chunk {
-    position: IVec3,
-    voxels: Vec<VoxelMaterial>,
+impl VoxelWorld {
+    pub fn add_chunk(&mut self, chunk: Chunk) {
+        self.chunks.push(chunk);
+    }
 }
 
-impl Chunk {
-    pub fn new(position: IVec3) -> Self {
-        Self {
-            position,
-            voxels: vec![VoxelMaterial::Air; (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) as usize],
+#[derive(Debug)]
+pub struct WorldPlugin;
+
+fn generate_test_chunks(mut world: ResMut<VoxelWorld>) {
+    // Generate a few test chunks
+    for x in -1..=1 {
+        for z in -1..=1 {
+            let chunk = Chunk::new(IVec3::new(x * CHUNK_SIZE, 0, z * CHUNK_SIZE));
+            world.add_chunk(chunk);
         }
     }
 }
 
-pub struct WorldPlugin;
+fn update_chunks(world: Res<VoxelWorld>) {
+    // Placeholder system that will later handle chunk updates
+    for _chunk in world.chunks.iter() {
+        // No-op for now
+    }
+}
 
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<VoxelWorld>()
-           .add_systems(Startup, setup_world)
-           .add_systems(Update, (
-               // We'll add systems here later
-           ));
+           .add_systems(Startup, generate_test_chunks)
+           .add_systems(Update, update_chunks);
     }
-}
-
-fn setup_world(mut commands: Commands) {
-    // Initial world setup will go here
 }
