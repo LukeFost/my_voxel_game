@@ -1,3 +1,7 @@
 /target
 .aider*
 .env
+/claude-output/target
+/claude-output/Cargo.lock
+/o1pro-output/target
+/o1pro-output/Cargo.lock
